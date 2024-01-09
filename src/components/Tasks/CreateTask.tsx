@@ -17,17 +17,17 @@ export const CreateTask: React.FC = () => {
 
     const dispatch = useAppDispatch();
     
-    let categoryList = categories.map((elem): IOption =>  ({value: elem.id,  label: elem.name}));
+    let categoryList = categories.map((category): IOption =>  ({value: category.id,  label: category.name}));
 
-    const handleCreate = async (task: Task) => {
+    const handleCreate = async (newTask: Task) => {
 
-        console.log(task);
+        console.log(newTask);
         const response = await fetch('http://localhost:8089/api/ToDoList/AddTask', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(task)
+            body: JSON.stringify(newTask)
         });
         
         if (response.ok){
@@ -38,12 +38,12 @@ export const CreateTask: React.FC = () => {
         closeForm();
     }
 
-    const submitFormHandler: SubmitHandler<Task> = (data, event) => {
+    const submitFormHandler: SubmitHandler<Task> = (newTask, event) => {
 
         console.log(categoryList);
         event?.preventDefault();
-        data.categoryId ??= 0;
-        handleCreate(data);
+        newTask.categoryId ??= 0;
+        handleCreate(newTask);
     }
 
     const closeForm = () => {
@@ -51,8 +51,8 @@ export const CreateTask: React.FC = () => {
         reset();
     }
 
-    const getValue = (value: number) => 
-        value ? categoryList.find(category => category.value === value) : 0;
+    const getValue = (categoryId: number) => 
+        categoryId ? categoryList.find(category => category.value === categoryId) : 0;
 
 return (
     <>

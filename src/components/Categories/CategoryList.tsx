@@ -14,7 +14,7 @@ import { useAppDispatch } from '../../hooks/storeHook';
 
 export const CategoryList: React.FC = () => {
 
-    const {categories, error, loading} = useCategories();
+    const { categories, error, loading } = useCategories();
     const [category, setCategory] = useState<Category>({id: 0, name: '', description: ''});
 
     const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export const CategoryList: React.FC = () => {
       setDeleteModal(false);
     }
 
-    function enableDelete(id:number) {
+    function openDeleteModal(id:number) {
       let selectedCategory = categories.find(el => el.id == id);
 
       if (selectedCategory){
@@ -43,8 +43,8 @@ export const CategoryList: React.FC = () => {
       }
     }
   
-    function enableEdit(id:number) {
-      let selectedCategory = categories.find(el => el.id == id);
+    function openEditModal(id:number) {
+      let selectedCategory = categories.find(category => category.id == id);
 
       if (selectedCategory){
         setCategory(selectedCategory);
@@ -52,9 +52,9 @@ export const CategoryList: React.FC = () => {
       }
     }
 
-    let categoryList = categories.map((elem, index) => 
-      <ListElement handleEdit={enableEdit} handleDelete={enableDelete} key={index} id={elem.id}> 
-        <SingleCategory category = {elem} key={index} />
+    let categoryList = categories.map((category, index) => 
+      <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={index} id={category.id}> 
+        <SingleCategory category = {category} key={index} />
       </ListElement>);
     
     return (

@@ -16,7 +16,7 @@ interface EditTaskProps {
 export const EditTask: React.FC<EditTaskProps> = ({task, onDone}: EditTaskProps) => {
     
     const {register, handleSubmit, setValue, formState: {errors}, reset, control} = useForm<Task>(
-        {defaultValues: {id: task.id, name: task.name, categoryId: undefined, description: task.description}}
+        {defaultValues: {...task, categoryId: undefined}}
     );
 
     const {categories} = useCategories();
@@ -25,28 +25,28 @@ export const EditTask: React.FC<EditTaskProps> = ({task, onDone}: EditTaskProps)
 
     let categoryList = categories.map((elem: Category): IOption => ({value:elem.id, label: elem.name}));
     
-    const handleEdit = async (data: Task) => {
-        console.log(data);
+    const handleEdit = async (editedTask: Task) => {
+        console.log(editedTask);
         const response = await fetch('http://localhost:8089/api/ToDoList/UpdateTask', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(editedTask)
         });
         
         if (response.ok)
-            dispatch(editTask(data));
+            dispatch(editTask(editedTask));
      
         closeForm();
     }
 
-    const submitFormHandler:SubmitHandler<Task> = (data, event) => {
+    const submitFormHandler: SubmitHandler<Task> = (editedTask, event) => {
 
         console.log(categoryList);
         event?.preventDefault();
-        data.categoryId ??= 0;
-        handleEdit(data);
+        editedTask.categoryId ??= 0;
+        handleEdit(editedTask);
     }
 
     const closeForm = () => {
@@ -58,8 +58,8 @@ export const EditTask: React.FC<EditTaskProps> = ({task, onDone}: EditTaskProps)
         setValue('categoryId', task.categoryId);
       }, []);
 
-    const getValue = (value: number) => 
-        value ? categoryList.find(category => category.value === value) : null
+    const getValue = (categoryId: number) => 
+        categoryId ? categoryList.find(category => category.value === categoryId) : null
 
     return (
         <Modal title= "Редактирование задачи" submitText = "Сохранить" 

@@ -41,7 +41,7 @@ export const TaskList: React.FC = () => {
     setDeleteModal(false);
   }
   
-  function enableDelete(id:number) {
+  function openDeleteModal(id: number) {
     const selectedTask = tasks.find(el => el.id == id); 
 
     if (selectedTask){
@@ -50,7 +50,7 @@ export const TaskList: React.FC = () => {
     }
   }
 
-  function enableEdit(id:number) {
+  function openEditModal(id:number) {
     const selectedTask = tasks.find(el => el.id == id);
 
     if (selectedTask){
@@ -59,15 +59,15 @@ export const TaskList: React.FC = () => {
     }
   }
 
-  let tasksWithCategoryName = tasks.map((elem) : TaskView => {
-    let category = categories.find(el => el.id == elem.categoryId);
+  let tasksWithCategoryName = tasks.map((task) : TaskView => {
+    let category = categories.find(category => category.id == task.categoryId);
     
-    return { id:elem.id, categoryName: ((category) ? category.name : ''), description:elem.description, name: elem.name}
+    return { id:task.id, categoryName: ((category) ? category.name : ''), description:task.description, name: task.name}
   });
 
-  let taskList = tasksWithCategoryName.map((elem, index) => 
-    <ListElement handleEdit={enableEdit} handleDelete={enableDelete} key={index} id={elem.id}> 
-      <SingleTask task = {elem} key={index} /> 
+  let taskList = tasksWithCategoryName.map((taskElem, index) => 
+    <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={index} id={taskElem.id}> 
+      <SingleTask task = {taskElem} key={index} /> 
     </ListElement>);
 
   return (

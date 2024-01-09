@@ -17,25 +17,25 @@ export const EditCategory: React.FC<EditCategoryProps> = ({category, onDone}: Ed
 
     const dispatch = useAppDispatch();
     
-    const handleEdit = async (data:Category) => {
+    const handleEdit = async (editedCategory:Category) => {
 
         const response = await fetch('http://localhost:8089/api/ToDoList/UpdateCategory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(editedCategory)
         });
         
         if (response.ok)
-            dispatch(editCategory(data));
+            dispatch(editCategory(editedCategory));
      
         closeForm();
     }
 
-    const submitFormHandler:SubmitHandler<Category> = (data, event) => {
+    const submitFormHandler:SubmitHandler<Category> = (editedCategory, event) => {
         event?.preventDefault();
-        handleEdit(data);
+        handleEdit(editedCategory);
     }
 
     const closeForm = () => {

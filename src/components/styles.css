@@ -1,11 +1,11 @@
 .header {
-  display: flex;
+  height: 88px;
   padding: 0px 24px 0px 24px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
   background-color: #3F72AF;
-  height: 88px;
+  color: white;
   box-shadow: 0 0 10px 0 black;
   border: 0px;
 }
@@ -23,13 +23,13 @@
 
 .header__tasksBtn, .header__categoriesBtn,
 .header__tasksBtn__active, .header__categoriesBtn__active{
-  text-decoration: underline;
-  color: #DBE2EF;
-  background-color: inherit;
-  font-size: 24px;
-  line-height: 30px;
   padding-left: 5px;
   padding-right: 5px;
+  background-color: inherit;
+  line-height: 30px;
+  font-size: 24px;
+  text-decoration: underline;
+  color: #DBE2EF;
 }
 
 .header__tasksBtn__active, .header__categoriesBtn__active{
@@ -59,13 +59,13 @@
 }
 
 .list__element{
-  line-height: 1.5;
-  padding: 0 16px 0 16px;
   height: 80px;
+  padding: 0 16px 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 2px #3F72AF;
+  line-height: 1.5;
 }
 
 .list__element__info{
@@ -103,20 +103,20 @@
 }
 
 .modal__foreground{
-  display: grid;
-  grid-template-columns: auto 120px;
-  grid-template-rows: auto auto auto;
   padding: 20px;
-  color: #3F72AF;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: auto 120px;
+  grid-template-rows: auto auto auto;
+  row-gap: 20px;
+  column-gap: 20px;
+  color: #3F72AF;
   background-color: #DBE2EF;
   border-radius: 3px;
   box-shadow: 0 0 15px -2px black;
-  row-gap: 20px;
-  column-gap: 20px;
 }
 
 .modal__foreground h1{
@@ -128,12 +128,12 @@
 }
 
 .modal__closeBtn{
-  color: inherit;
-  border: inherit;
-  background: inherit;
-  font-size: 36px;
   align-self: start;
   justify-self: right;
+  border: inherit;
+  background: inherit;
+  color: inherit;
+  font-size: 36px;
 }
 
 .modal__inner{
@@ -145,19 +145,19 @@
 /*---------------*/
 
 .primaryBtn, .secondaryBtn{
-  border-radius: 3px;
   padding: 5px;
   height: 40px;
   font-family: 'Segoe UI' sans-serif;
   font-size: 18px;
+  border-radius: 3px;
   outline: none;
 }
 
 .primaryBtn{
+  width: 40%;
   background-color: #3F72AF;
   color: white;
   border: 0;
-  width: 40%;
 }
 
 .primaryBtn:focus, .primaryBtn:hover{
@@ -170,11 +170,11 @@
 }
 
 .secondaryBtn{
+  width: 120px;
+  justify-self: right;
   background-color: transparent;
   color: #3F72AF;
   border: 2px solid #3F72AF;
-  width: 120px;
-  justify-self: right;
 }
 
 .secondaryBtn:focus, .secondaryBtn:hover{
@@ -215,8 +215,8 @@
 }
 
 .modal__content__errorMsg{
-  font-size: 14px;
   line-height: 20px;
+  font-size: 14px;
   color: red;
 }
 
@@ -234,13 +234,13 @@
 }
 
 .input, .textarea{
-  border: 2px solid #3F72AF;
-  border-radius: 3px;
-  background-color: inherit;
   padding: 5px 5px;
+  width: calc(100% - 13px);
   min-width: 300px;
   min-height: 26px;
-  width: calc(100% - 13px);
+  background-color: inherit;
+  border: 2px solid #3F72AF;
+  border-radius: 3px;
   font-size: 18px;
   font-family: inherit;
 }
@@ -270,11 +270,11 @@
 /*--------------*/
 
 .custom-select__control {
+  width: calc(100% - 13px) !important;
+  min-width: 300px !important;
+  background-color: inherit !important;
   border: 2px solid #3F72AF !important;
   border-radius: 3px !important;
-  background-color: inherit !important;
-  min-width: 300px !important;
-  width: calc(100% - 13px) !important;
 }
 
 .custom-select__control:hover {
@@ -308,9 +308,9 @@
 
 
 .custom-select__menu {
-  box-shadow: 5px 5px 15px -5px black !important;
-  border: 2px solid #257FEA !important;
   background-color: #DBE2EF !important;
+  border: 2px solid #257FEA !important;
+  box-shadow: 5px 5px 15px -5px black !important;
 }
 
 .custom-select__menu-list {

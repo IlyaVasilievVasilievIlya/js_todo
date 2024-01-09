@@ -14,14 +14,14 @@ export const CreateCategory: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleCreate = async (category: Category) => {
+    const handleCreate = async (newCategory: Category) => {
 
         const response = await fetch('http://localhost:8089/api/ToDoList/AddCategory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(category)
+            body: JSON.stringify(newCategory)
         });
         
         if (response.ok){
@@ -32,9 +32,9 @@ export const CreateCategory: React.FC = () => {
         closeForm();
     }
 
-    const submitFormHandler: SubmitHandler<Category> = (data, event) => {
+    const submitFormHandler: SubmitHandler<Category> = (newCategory, event) => {
         event?.preventDefault();
-        handleCreate(data);
+        handleCreate(newCategory);
     }
 
     const closeForm = () => {
