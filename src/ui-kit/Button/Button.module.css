@@ -1,0 +1,54 @@
+.close-btn {
+    align-self: start;
+    justify-self: right;
+    border: inherit;
+    background: inherit;
+    color: inherit;
+    font-size: 36px;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 5px;
+    height: 40px;
+    font-family: 'Segoe UI' sans-serif;
+    font-size: 18px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.primary-btn {
+    width: 40%;
+    background-color: #3F72AF;
+    color: white;
+    border: 0;
+}
+
+.primary-btn:focus,
+.primary-btn:hover {
+    background-color: #257FEA;
+    outline-color: #257FEA;
+}
+
+.primary-btn:active {
+    background-color: #65ABFF;
+}
+
+.secondary-btn {
+    width: 120px;
+    justify-self: right;
+    background-color: transparent;
+    color: #3F72AF;
+    border: 2px solid #3F72AF;
+}
+
+.secondary-btn:focus,
+.secondary-btn:hover {
+    background-color: rgba(37, 127, 234, 0.2);
+    color: white;
+    outline-color: #257FEA;
+}
+
+.secondary-btn:active {
+    background-color: #257FEA;
+}

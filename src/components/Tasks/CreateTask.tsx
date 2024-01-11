@@ -6,6 +6,7 @@ import { useAppDispatch} from '../../hooks/storeHook';
 import { addTask} from '../../store/tasksSlice'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Select from 'react-select';
+import { API_URL } from '../../consts';
 
 
 export const CreateTask: React.FC = () => {
@@ -22,7 +23,7 @@ export const CreateTask: React.FC = () => {
     const handleCreate = async (newTask: Task) => {
 
         console.log(newTask);
-        const response = await fetch('http://localhost:8089/api/ToDoList/AddTask', {
+        const response = await fetch(`${API_URL}/AddTask`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -56,7 +57,7 @@ export const CreateTask: React.FC = () => {
 
 return (
     <>
-        <button  className="header__actionBtn" onClick={() => setModal(true)}>
+        <button  className="header__action-btn" onClick={() => setModal(true)}>
             Добавить задачу
         </button>
         { modal && 

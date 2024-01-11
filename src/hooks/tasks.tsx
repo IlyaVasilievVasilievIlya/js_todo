@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useAppDispatch, useAppSelector } from './storeHook';
 import {setTasks} from '../store/tasksSlice'
+import { API_URL } from '../consts';
 
 
 export function useTasks(){
@@ -15,15 +16,16 @@ export function useTasks(){
 
       setLoading(true);
 
-      let response = await fetch("http://localhost:8089/api/ToDoList/GetTasks");
+      let response = await fetch(`${API_URL}/GetTasks`);
       let body = await response.json();
       
       dispatch(setTasks(body));
 
-      } catch (e: unknown){
-          setError((e as Error).message);
-      }
+    } catch (e: unknown) {
+        setError((e as Error).message);
+    } finally {
       setLoading(false);
+    }
   }
     
   useEffect(() => {

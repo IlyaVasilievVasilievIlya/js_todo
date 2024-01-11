@@ -24,6 +24,6 @@ export function Modal({children, title, submitText, cancelText, onSubmit, onCanc
                     <button type="button" className="secondaryBtn" onClick={onCancel}>{cancelText}</button>
                 </div>
             </div>
-        </form>
+        </form>    
     )
 }

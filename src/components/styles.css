@@ -21,8 +21,7 @@
   margin-left: 50px;
 }
 
-.header__tasksBtn, .header__categoriesBtn,
-.header__tasksBtn__active, .header__categoriesBtn__active{
+.header__nav-link, .header__nav-link_active{
   padding-left: 5px;
   padding-right: 5px;
   background-color: inherit;
@@ -30,21 +29,23 @@
   font-size: 24px;
   text-decoration: underline;
   color: #DBE2EF;
-}
-
-.header__tasksBtn__active, .header__categoriesBtn__active{
-  color:#8FB6FF;
-}
-
-.header__tasksBtn:hover, .header__categoriesBtn:hover{
-  color: white;
-}
-
-.header__tasksBtn, .header__tasksBtn__active {
   border-right: 2px solid #DBE2EF;
 }
 
-.header__actionBtn { 
+.header__nav-link_active {
+  color:#8FB6FF;
+}
+
+.header__nav-link:hover {
+  color: white;
+}
+
+.header__nav-link:last-child,
+.header__nav-link_active:last-child {
+  border-right: 0px;
+}
+
+.header__action-btn { 
   background-color: inherit;
   font-size: 20px;
   border: inherit;
@@ -93,7 +94,7 @@
 
 /*------------*/
 
-.modal__background{
+/* .modal__background{
   position: fixed;
   top: 0;
   right: 0;
@@ -117,17 +118,17 @@
   background-color: #DBE2EF;
   border-radius: 3px;
   box-shadow: 0 0 15px -2px black;
-}
+} */
 
-.modal__foreground h1{
+/* .modal__foreground h1{
   white-space: nowrap; 
 }
 
-.modal__foreground .primaryBtn{
+.modal__foreground .primary-btn{
   justify-self: right;
 }
 
-.modal__closeBtn{
+.modal__close-btn{
   align-self: start;
   justify-self: right;
   border: inherit;
@@ -140,11 +141,11 @@
   grid-column: 1 / span 2;
   grid-row: 2 / span 1;
   color: black;
-}
+} */
 
 /*---------------*/
 
-.primaryBtn, .secondaryBtn{
+.primary-btn, .secondary-btn{
   padding: 5px;
   height: 40px;
   font-family: 'Segoe UI' sans-serif;
@@ -153,23 +154,23 @@
   outline: none;
 }
 
-.primaryBtn{
+.primary-btn{
   width: 40%;
   background-color: #3F72AF;
   color: white;
   border: 0;
 }
 
-.primaryBtn:focus, .primaryBtn:hover{
+.primary-btn:focus, .primary-btn:hover{
   background-color: #257FEA;
   outline-color: #257FEA;
 }
 
-.primaryBtn:active{
+.primary-btn:active{
   background-color: #65ABFF;
 }
 
-.secondaryBtn{
+.secondary-btn{
   width: 120px;
   justify-self: right;
   background-color: transparent;
@@ -177,13 +178,13 @@
   border: 2px solid #3F72AF;
 }
 
-.secondaryBtn:focus, .secondaryBtn:hover{
+.secondary-btn:focus, .secondary-btn:hover{
   background-color: rgba(37, 127, 234, 0.2);
   color: white;
   outline-color: #257FEA;
 }
 
-.secondaryBtn:active{
+.secondary-btn:active{
   background-color: #257FEA;
 }
 
@@ -331,43 +332,4 @@
 
 /*-------------*/
 
-.loading{
-  position: relative;
-  height: 20px;
-  top: 50%;
-  left: 50%;
-}
 
-@keyframes loading {
-  from {
-    bottom: 100%
-  }
-
-  33%{
-    bottom: 0%;
-  }
-
-  to {
-    bottom: 0%;
-  }
-}
-
-.loading > *{
-  position: absolute;
-  font-size: 60px;
-  color: #3F72AF;
-  animation-name: loading;
-  animation-iteration-count: infinite;
-  animation-duration: 1.5s;
-  text-shadow: 0px 5px 2px rgba(63, 114, 175, 0.5);
-}
-
-.loading > *:nth-child(2){
-  left: 9px;
-  animation-delay: 0.5s;
-}
-
-.loading > *:nth-child(3){
-  left: 18px;
-  animation-delay: 1s;
-}

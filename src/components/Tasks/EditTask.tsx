@@ -6,6 +6,7 @@ import { editTask} from '../../store/tasksSlice'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { useEffect } from 'react';
+import { API_URL } from '../../consts';
 
 
 interface EditTaskProps {
@@ -27,7 +28,7 @@ export const EditTask: React.FC<EditTaskProps> = ({task, onDone}: EditTaskProps)
     
     const handleEdit = async (editedTask: Task) => {
         console.log(editedTask);
-        const response = await fetch('http://localhost:8089/api/ToDoList/UpdateTask', {
+        const response = await fetch(`${API_URL}/UpdateTask`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

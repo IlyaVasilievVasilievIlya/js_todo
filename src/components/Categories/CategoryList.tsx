@@ -7,10 +7,11 @@ import { SingleCategory } from './SingleCategory';
 import { ListElement } from '../ListElement';
 import { deleteCategory} from '../../store/categoriesSlice'
 import { ErrorMessage } from '../ErrorMessage';
-import { Modal } from '../Modal';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { EditCategory } from './EditCategory';
-import { Loader } from '../Loader';
+import { Loader } from '../../ui-kit/Loader/Loader';
 import { useAppDispatch } from '../../hooks/storeHook';
+import { API_URL } from '../../consts';
 
 export const CategoryList: React.FC = () => {
 
@@ -23,10 +24,9 @@ export const CategoryList: React.FC = () => {
 
     const [deleteModal, setDeleteModal] = useState(false);
 
-    const submitDeleteHandler = async (event: React.FormEvent) => {
-      event?.preventDefault();
+    const submitDeleteHandler = async () => {
 
-      const response = await fetch(`http://localhost:8089/api/ToDoList/RemoveCategory/${category.id}`);
+      const response = await fetch(`${API_URL}/RemoveCategory/${category.id}`);
 
       if (response.ok)
           dispatch(deleteCategory(category.id));
@@ -52,23 +52,30 @@ export const CategoryList: React.FC = () => {
       }
     }
 
-    let categoryList = categories.map((category, index) => 
-      <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={index} id={category.id}> 
-        <SingleCategory category = {category} key={index} />
+    let categoryList = categories.map(category => 
+      <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={category.id} id={category.id}> 
+        <SingleCategory category = {category} key={category.id} />
       </ListElement>);
     
     return (
       <>
-        {error? <ErrorMessage error={error}/> : <div className="list">{categoryList}</div>}
+        {error && <ErrorMessage error={error}/>}
+        
+        <div className="list">{categoryList}</div>
 
         {loading && <Loader/>}
 
-        {deleteModal && category && <Modal title = "Удаление категории" submitText = "Да"
-          cancelText = "Нет" onSubmit={submitDeleteHandler} onCancel={() => setDeleteModal(false)}>
-          <span>Вы уверены, что хотите удалить категорию "{category.name}"?</span>
-          </Modal>}
+        <ConfirmModal 
+          isOpened={deleteModal} 
+          title = "Удаление категории" 
+          submitText = "Да"
+          cancelText = "Нет" 
+          onSubmit={() => submitDeleteHandler()} 
+          onClose={() => setDeleteModal(false)}>
+            <span>Вы уверены, что хотите удалить категорию "{category.name}"?</span>
+        </ConfirmModal>
 
-        {isOnEdit && category && <EditCategory 
+        {isOnEdit && <EditCategory 
           category= {category} onDone={() => setIsOnEdit(false)} />}
       </>
     );

@@ -4,6 +4,7 @@ import { Modal } from '../Modal';
 import { useAppDispatch } from '../../hooks/storeHook';
 import { addCategory} from '../../store/categoriesSlice'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { API_URL } from '../../consts';
 
 
 export const CreateCategory: React.FC = () => {
@@ -16,7 +17,7 @@ export const CreateCategory: React.FC = () => {
 
     const handleCreate = async (newCategory: Category) => {
 
-        const response = await fetch('http://localhost:8089/api/ToDoList/AddCategory', {
+        const response = await fetch(`${API_URL}/AddCategory`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -44,7 +45,7 @@ export const CreateCategory: React.FC = () => {
 
 return (
     <>
-        <button className="header__actionBtn" onClick={() => setModal(true)}>
+        <button className="header__action-btn" onClick={() => setModal(true)}>
             Добавить категорию
         </button>
         { modal && 

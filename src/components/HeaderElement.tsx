@@ -6,14 +6,28 @@ interface Props  {
   children: React.ReactNode;
 }
 
+interface NavInfo {
+  to: string;
+  text: string;
+}
+
 export const HeaderElement: React.FC<Props> = ({children} : Props) => {
-  
+
+  const links: NavInfo[] = [
+    {to: "/", text: "Задачи"},
+    {to: "/categories", text:"Категории"}
+  ];
+
+  const navMenu = links.map( link => 
+      <NavLink to={link.to} className={(navData) => (navData.isActive ? 'header__nav-link_active' : 'header__nav-link')} key={link.to}>
+        {link.text}
+      </NavLink>);
+
   return (
     <div className="header">
       <span className="header__text">ToDo List</span>
       <div className="header__menuGroup">
-        <NavLink to="/" className={(navData) => (navData.isActive ? 'header__tasksBtn__active' : 'header__tasksBtn')}>Задачи</NavLink>
-        <NavLink to="/categories" className={(navData) => (navData.isActive ? 'header__categoriesBtn__active' : 'header__categoriesBtn')}>Категории</NavLink>
+        {navMenu}
       </div>
       {children}
     </div>

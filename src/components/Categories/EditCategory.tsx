@@ -1,8 +1,10 @@
 import { Category } from '../model'
-import { Modal } from '../Modal';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { useAppDispatch} from '../../hooks/storeHook';
 import { editCategory} from '../../store/categoriesSlice'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { API_URL } from '../../consts';
+import { Input } from '../../ui-kit/Input/Input';
 
 interface EditCategoryProps {
     category: Category
@@ -19,7 +21,7 @@ export const EditCategory: React.FC<EditCategoryProps> = ({category, onDone}: Ed
     
     const handleEdit = async (editedCategory:Category) => {
 
-        const response = await fetch('http://localhost:8089/api/ToDoList/UpdateCategory', {
+        const response = await fetch(`${API_URL}/UpdateCategory`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -44,10 +46,19 @@ export const EditCategory: React.FC<EditCategoryProps> = ({category, onDone}: Ed
     }
 
     return (
-        <Modal title= "Редактирование категории" submitText = "Сохранить"
+        <ConfirmModal isOpened = {true} title = "Редактирование категории" submitText = "Сохранить"
             cancelText = "Закрыть" onSubmit={handleSubmit(submitFormHandler)} 
-            onCancel={closeForm}>
+            onClose={closeForm}>
             <div className = "modal__content__oneCol">
+                <Input 
+                    name="name"
+                    placeholder="Введите имя категории" 
+                    label="Имя" 
+                    required={true} 
+                    type="text" 
+                    maxLength={255}
+                    register={register}
+                    errors={errors}/>
                 <div>
                     <label className="label__required">
                         Имя<span>*</span>
@@ -69,6 +80,6 @@ export const EditCategory: React.FC<EditCategoryProps> = ({category, onDone}: Ed
                     <span className="modal__content__errorMsg">{errors.description?.message}</span>                    
                 </div>
             </div>
-        </Modal>
+        </ConfirmModal>
         )
 }

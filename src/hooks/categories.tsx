@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useAppDispatch, useAppSelector } from './storeHook';
 import {setCategories} from '../store/categoriesSlice'
+import { API_URL } from '../consts';
 
 export function useCategories() {
 
@@ -14,15 +15,17 @@ export function useCategories() {
 
       setLoading(true);
 
-      let response = await fetch("http://localhost:8089/api/ToDoList/GetCategories");
+      let response = await fetch(`${API_URL}/GetCategories`);
       
       let body = await response.json();
     
       dispatch(setCategories(body));
-    } catch (e: unknown){
+      
+    } catch (e: unknown) {
         setError((e as Error).message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   useEffect(() => {

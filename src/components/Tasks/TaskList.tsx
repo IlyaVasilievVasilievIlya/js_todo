@@ -7,11 +7,12 @@ import { useTasks } from '../../hooks/tasks';
 import { useCategories } from '../../hooks/categories';
 import { ListElement } from '../ListElement';
 import { useAppDispatch } from '../../hooks/storeHook';
-import { Modal } from '../Modal';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { EditTask } from './EditTask';
 import { ErrorMessage } from '../ErrorMessage';
 import { deleteTask } from '../../store/tasksSlice'
-import { Loader } from '../Loader';
+import { Loader } from '../../ui-kit/Loader/Loader';
+import { API_URL } from '../../consts';
 
 
 export const TaskList: React.FC = () => {
@@ -28,11 +29,9 @@ export const TaskList: React.FC = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   
 
-  const submitDeleteHandler = async (event: React.FormEvent) => {
+  const submitDeleteHandler = async () => {
 
-    event.preventDefault();
-
-    const response = await fetch(`http://localhost:8089/api/ToDoList/RemoveTask/${task.id}`);
+    const response = await fetch(`${API_URL}/RemoveTask/${task.id}`);
 
     if (response.ok){
       dispatch(deleteTask(task.id));
@@ -65,9 +64,9 @@ export const TaskList: React.FC = () => {
     return { id:task.id, categoryName: ((category) ? category.name : ''), description:task.description, name: task.name}
   });
 
-  let taskList = tasksWithCategoryName.map((taskElem, index) => 
-    <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={index} id={taskElem.id}> 
-      <SingleTask task = {taskElem} key={index} /> 
+  let taskList = tasksWithCategoryName.map( taskElem => 
+    <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={taskElem.id} id={taskElem.id}> 
+      <SingleTask task = {taskElem} key={taskElem.id} /> 
     </ListElement>);
 
   return (
@@ -79,10 +78,14 @@ export const TaskList: React.FC = () => {
 
       {categoriesFetchError && <ErrorMessage error={categoriesFetchError}/>}
 
-      {deleteModal && task && <Modal title = "Удаление задачи" submitText = "Да"
-      cancelText = "Нет" onSubmit={submitDeleteHandler} onCancel={() => setDeleteModal(false)}>
+      <ConfirmModal isOpened={deleteModal} 
+          title = "Удаление задачи" 
+          submitText = "Да"
+          cancelText = "Нет" 
+          onSubmit={() => submitDeleteHandler()} 
+          onClose={() => setDeleteModal(false)}>
         <span>Вы уверены, что хотите удалить задачу "{task.name}"?</span>
-      </Modal>}
+      </ConfirmModal>
 
       {isOnEdit && task && <EditTask task = {task} onDone = {() => setIsOnEdit(false)}/>}
     </>
