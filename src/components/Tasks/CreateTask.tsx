@@ -1,12 +1,15 @@
 import { useCategories } from '../../hooks/categories'
 import { Category, IOption, Task } from '../model'
 import { useState } from 'react'
-import { Modal } from '../Modal';
 import { useAppDispatch} from '../../hooks/storeHook';
 import { addTask} from '../../store/tasksSlice'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { API_URL } from '../../consts';
+import { Input } from '../../ui-kit/Input/Input';
+import { Textarea } from '../../ui-kit/Textarea/Textarea';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
+import { Button } from '../../ui-kit/Button/Button';
 
 
 export const CreateTask: React.FC = () => {
@@ -57,55 +60,49 @@ export const CreateTask: React.FC = () => {
 
 return (
     <>
-        <button  className="header__action-btn" onClick={() => setModal(true)}>
+        <Button className='actionBtn' type="button" onClick={() => setModal(true)}>
             Добавить задачу
-        </button>
-        { modal && 
-            <Modal title= "Создание задачи" submitText = "Создать" 
-                cancelText = "Закрыть" onSubmit={handleSubmit(submitFormHandler)} onCancel={closeForm}>
-                <div className = "modal__content__twoCols">
-                    <div> 
-                        <label className="label__required">
-                            Имя<span>*</span>
-                        </label>
-                        <input {...register("name", {required: `Поле должно быть обязательным`, 
-                                                     maxLength: {value: 255, message: "Имя не должно содержать более 255 символов"}})} type="text"
-                            placeholder="Введите имя задачи" className={`input ${errors.name?.message ? ' error__field' : ''}`} > 
-                        </input>
-                        <span className="modal__content__errorMsg">{errors.name?.message}</span>
-                    </div>
-                    <div>
-                        <label className="label" >
-                            Категория
-                        </label>
-                        <Controller
-                            control = {control}
-                            name="categoryId"
-                            render= {({ field: {onChange, value}}) => (
-                                <Select
-                                    classNamePrefix='custom-select'
-                                    placeholder='Выберите категорию'
-                                    className="select"
-                                    options={categoryList}
-                                    value={getValue(value)}
-                                    onChange = {(newValue) => onChange((newValue as IOption)?.value)}
-                                    isClearable={true}
-                                    isSearchable={false}/>)}/>
-                    </div>
-                    <div>
-                        <label className="label">
-                            Описание
-                        </label>
-                        <textarea {...register("description", {
-                            maxLength: {value:1536, message: "Описание не должно содержать более 1536 символов"}})} 
-                            placeholder="Введите описание задачи" className={`textarea ${errors.description?.message ? ' error__field' : ''}`}/>
-                        <span className={`modal__content__errorMsg`}>
-                            {errors.description?.message}
-                        </span>    
-                    </div>
+        </Button>
+        <ConfirmModal isOpened={modal} title= "Создание задачи" submitText = "Создать" 
+            cancelText = "Закрыть" onSubmit={handleSubmit(submitFormHandler)} onClose={closeForm}>
+            <div className = "modal__content twoCols">
+                <Input
+                    label="Имя"
+                    type="text"
+                    isRequired={true}
+                    placeholder='Введите имя задачи'
+                    errorMessage={errors.name?.message}
+                    {...register("name", {required: `Поле должно быть обязательным`, 
+                                            maxLength: {value: 255, message: "Имя не должно содержать более 255 символов"}})}
+                />
+                <div>
+                    <label className="label" >
+                        Категория
+                    </label>
+                    <Controller
+                        control = {control}
+                        name="categoryId"
+                        render= {({ field: {onChange, value}}) => (
+                            <Select
+                                classNamePrefix='custom-select'
+                                placeholder='Выберите категорию'
+                                className="select"
+                                options={categoryList}
+                                value={getValue(value)}
+                                onChange = {(newValue) => onChange((newValue as IOption)?.value)}
+                                isClearable={true}
+                                isSearchable={false}/>)}/>
                 </div>
-            </Modal>
-        }
+                <Textarea 
+                    placeholder="Введите описание задачи"
+                    label="Описание"
+                    isRequired={false}
+                    errorMessage={errors.description?.message}
+                    {...register("description", {
+                        maxLength: {value:1536, message: "Описание не должно содержать более 1536 символов"}})} 
+                />
+            </div>
+        </ConfirmModal>
     </>
     )
 }

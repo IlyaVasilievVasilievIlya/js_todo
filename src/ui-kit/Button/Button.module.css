@@ -1,14 +1,10 @@
-.close-btn {
-    align-self: start;
-    justify-self: right;
-    border: inherit;
-    background: inherit;
-    color: inherit;
-    font-size: 36px;
+button {
+    cursor: pointer;
 }
 
-.primary-btn,
-.secondary-btn {
+
+.primaryBtn,
+.secondaryBtn {
     padding: 5px;
     height: 40px;
     font-family: 'Segoe UI' sans-serif;
@@ -17,24 +13,24 @@
     outline: none;
 }
 
-.primary-btn {
+.primaryBtn {
     width: 40%;
     background-color: #3F72AF;
     color: white;
     border: 0;
 }
 
-.primary-btn:focus,
-.primary-btn:hover {
+.primaryBtn:focus,
+.primaryBtn:hover {
     background-color: #257FEA;
     outline-color: #257FEA;
 }
 
-.primary-btn:active {
+.primaryBtn:active {
     background-color: #65ABFF;
 }
 
-.secondary-btn {
+.secondaryBtn {
     width: 120px;
     justify-self: right;
     background-color: transparent;
@@ -42,13 +38,44 @@
     border: 2px solid #3F72AF;
 }
 
-.secondary-btn:focus,
-.secondary-btn:hover {
+.secondaryBtn:focus,
+.secondaryBtn:hover {
     background-color: rgba(37, 127, 234, 0.2);
     color: white;
     outline-color: #257FEA;
 }
 
-.secondary-btn:active {
+.secondaryBtn:active {
     background-color: #257FEA;
+}
+
+.actionBtn {
+    background-color: inherit;
+    font-size: 20px;
+    border: inherit;
+    color: inherit;
+}
+
+.closeBtn,
+.editBtn,
+.deleteBtn {
+    width: 24px;
+    height: 24px;
+    border: inherit;
+    background-color: inherit;
+    margin: 5px;
+}
+
+.closeBtn {
+    align-self: start;
+    justify-self: right;
+    background-image: url("../../public/close.svg");
+}
+
+.editBtn {
+    background-image: url("../../public/edit.svg");
+}
+
+.deleteBtn {
+    background-image: url("../../public/delete.svg");
 }

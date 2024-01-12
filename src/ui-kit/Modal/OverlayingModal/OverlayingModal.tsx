@@ -1,8 +1,5 @@
-import React from 'react'
 import styles from './OverlayingModal.module.css'
-
-
-
+import { OverlayingModalProps } from './OverlayingModal.props';
 
 export function OverlayingModal({children, onClose, isOpened}: OverlayingModalProps){
 
@@ -16,7 +13,7 @@ export function OverlayingModal({children, onClose, isOpened}: OverlayingModalPr
                 className={styles.overlay}
                 role="button"
                 tabIndex={0}
-                onClick={onClose} 
+                onClick={onClose}
             /> 
             {children}
         </div>

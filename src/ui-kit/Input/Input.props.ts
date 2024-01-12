@@ -1,11 +1,11 @@
-import { UseFormRegister, FieldValues, FieldErrors, UseControllerProps } from 'react-hook-form'
+import { EventHandler } from "react"
 
-export interface InputProps<T extends FieldValues> extends UseControllerProps<T> {
+export interface InputProps {
+    name: string
     label: string
     placeholder: string
-    required: boolean
+    isRequired: boolean
     type: string
-    maxLength: number
-    register: UseFormRegister<T>
-    errors: FieldErrors<T>
+    onChange: any
+    errorMessage: string | undefined
 }

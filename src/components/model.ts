@@ -9,7 +9,7 @@ export interface TaskView {
     id: number;
     name: string;
     description: string;
-    categoryName: string;
+    categoryName?: string;
 }
 
 export interface Category {

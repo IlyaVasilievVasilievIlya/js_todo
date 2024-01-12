@@ -45,12 +45,7 @@
   border-right: 0px;
 }
 
-.header__action-btn { 
-  background-color: inherit;
-  font-size: 20px;
-  border: inherit;
-  color: inherit;
-}
+
 
 /*-------------*/
 
@@ -69,203 +64,54 @@
   line-height: 1.5;
 }
 
-.list__element__info{
+.list__element-info{
   display: flex;
   flex-direction: column;
 }
 
-.list__element__info div{
+.list__element-info div{
   display: flex;
   flex-direction: row;
 }
 
-.list__element__info__name{
+.list__element-info-name{
   font-weight: 500;
 }
 
-.list__element__info__desc{
+.list__element-info-desc{
   color:#808080;
 }
 
-.list__element__info__category{
+.list__element-info-category{
   margin: 0 0 0 10px;
   color: #3F72AF;
 }
 
-/*------------*/
-
-/* .modal__background{
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, .3);
-}
-
-.modal__foreground{
-  padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  grid-template-columns: auto 120px;
-  grid-template-rows: auto auto auto;
-  row-gap: 20px;
-  column-gap: 20px;
-  color: #3F72AF;
-  background-color: #DBE2EF;
-  border-radius: 3px;
-  box-shadow: 0 0 15px -2px black;
-} */
-
-/* .modal__foreground h1{
-  white-space: nowrap; 
-}
-
-.modal__foreground .primary-btn{
-  justify-self: right;
-}
-
-.modal__close-btn{
-  align-self: start;
-  justify-self: right;
-  border: inherit;
-  background: inherit;
-  color: inherit;
-  font-size: 36px;
-}
-
-.modal__inner{
-  grid-column: 1 / span 2;
-  grid-row: 2 / span 1;
-  color: black;
-} */
-
-/*---------------*/
-
-.primary-btn, .secondary-btn{
-  padding: 5px;
-  height: 40px;
-  font-family: 'Segoe UI' sans-serif;
-  font-size: 18px;
-  border-radius: 3px;
-  outline: none;
-}
-
-.primary-btn{
-  width: 40%;
-  background-color: #3F72AF;
-  color: white;
-  border: 0;
-}
-
-.primary-btn:focus, .primary-btn:hover{
-  background-color: #257FEA;
-  outline-color: #257FEA;
-}
-
-.primary-btn:active{
-  background-color: #65ABFF;
-}
-
-.secondary-btn{
-  width: 120px;
-  justify-self: right;
-  background-color: transparent;
-  color: #3F72AF;
-  border: 2px solid #3F72AF;
-}
-
-.secondary-btn:focus, .secondary-btn:hover{
-  background-color: rgba(37, 127, 234, 0.2);
-  color: white;
-  outline-color: #257FEA;
-}
-
-.secondary-btn:active{
-  background-color: #257FEA;
-}
-
 /*----------------*/
 
-.modal__content__twoCols, .modal__content__oneCol{
+.modal__content{
   display: grid;
   row-gap: 30px;
   column-gap: 20px;
 }
 
-.modal__content__twoCols{
+.modal__content > div {
+  position: relative;
+}
+
+.twoCols{
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
 }
 
-.modal__content__oneCol{
+.oneCol{
   grid-template-columns: auto;
   grid-template-rows: auto auto;
 }
 
-.modal__content__twoCols div:last-child{
+.twoCols div:last-child{
   grid-column: 1 / span 2;
   grid-row: 2 / span 1;
-}
-
-.modal__content__twoCols > div, .modal__content__oneCol > div{
-  position: relative;
-}
-
-.modal__content__errorMsg{
-  line-height: 20px;
-  font-size: 14px;
-  color: red;
-}
-
-.label__required, .label{
-  position: absolute;
-  top: -12px;
-  left: 10px;
-  background-color: #DBE2EF;
-  color:#3F72AF;
-  z-index: 1;
-}
-
-.label__required span{
-  color: red;
-}
-
-.input, .textarea{
-  padding: 5px 5px;
-  width: calc(100% - 13px);
-  min-width: 300px;
-  min-height: 26px;
-  background-color: inherit;
-  border: 2px solid #3F72AF;
-  border-radius: 3px;
-  font-size: 18px;
-  font-family: inherit;
-}
-
-.textarea{
-  resize: none;
-}
-
-
-.input:hover, .textarea:hover{
-  border-color: #257FEA;
-}
-
-.input:focus, .textarea:focus{
-  outline: none;
-  border-color: #257FEA;
-}
-
-.error__field{
-  border: 2px solid red !important;
-}
-
-.error__field:focus{
-  outline-color: red !important;
 }
 
 /*--------------*/

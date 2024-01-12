@@ -6,16 +6,18 @@ import { CategoryList } from './components/Categories/CategoryList';
 import { Route, Routes } from 'react-router-dom';
 import { TasksPage } from './pages/TasksPage';
 import { CategoriesPage } from './pages/CategoriesPage';
+import { navInfos } from './consts';
 
 export const ThemeContext = React.createContext('tasks');
 
 const App: React.FC = function () {
 
+  const routes = navInfos.map(navInfo => <Route {...navInfo}/>)
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={ <TasksPage/>}/>
-        <Route path="/categories" element={ <CategoriesPage/>} />
+        {routes}
       </Routes>
     </div>
   );

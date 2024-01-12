@@ -1,4 +1,4 @@
-interface ConfirmModalProps{
+export interface ConfirmModalProps{
     children: React.ReactNode
     isOpened: boolean
     title: string

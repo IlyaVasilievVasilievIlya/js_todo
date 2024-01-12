@@ -65,9 +65,7 @@ export const TaskList: React.FC = () => {
   });
 
   let taskList = tasksWithCategoryName.map( taskElem => 
-    <ListElement handleEdit={openEditModal} handleDelete={openDeleteModal} key={taskElem.id} id={taskElem.id}> 
-      <SingleTask task = {taskElem} key={taskElem.id} /> 
-    </ListElement>);
+      <SingleTask task = {taskElem} handleEdit={openEditModal} handleDelete={openDeleteModal} key={taskElem.id}/>);
 
   return (
     <>

@@ -1,6 +1,6 @@
-interface ButtonProps {
+export interface ButtonProps {
     className: string;
-    text: string;
+    children?: React.ReactNode;
     type: "submit" | "button" | "reset";
     onClick: () => void
 }

@@ -1,22 +1,22 @@
-import { FieldValues } from "react-hook-form";
 import { InputProps } from "./Input.props"
+import styles from './Input.module.css'
+import { forwardRef } from "react";
 
-export const Input = <T extends FieldValues>( {label, placeholder, name, required, type, maxLength, register, errors}: InputProps<T>) => {
-    
-    const isRequired: boolean | string = required ? `Поле должно быть обязательным` : false;
-    
+export const Input = forwardRef<HTMLInputElement, InputProps>(({
+    name, label, isRequired, type, placeholder, errorMessage, onChange}, ref) => {
+
     return (
         <div> 
-            <label className="label__required">
-                {label}{required && <span>*</span>}
+            <label className={`${styles.label} ${isRequired ? styles.required : ''}`}>
+                {label}{isRequired && <span>*</span>}
             </label>
-            <input {...register(name, {required: isRequired, 
-                                        maxLength: {value: maxLength, message: `Поле не должно содержать более ${maxLength} символов`}})} 
-                    type={type}
-                    placeholder={placeholder}
-                    className={`input ${errors[name]?.message ? ' error__field' : ''}`} > 
-            </input>
-            <span className="modal__content__errorMsg">{errors[name]?.message?.toString()}</span>
+            <input ref={ref} 
+                name={name}
+                type={type}
+                onChange={onChange}
+                placeholder={placeholder}
+                className={`${styles.input} ${errorMessage ? styles.errorField: ''}`}/> 
+            <span className={styles.errorMessage}>{errorMessage}</span>
         </div>
     )
-}
+})
