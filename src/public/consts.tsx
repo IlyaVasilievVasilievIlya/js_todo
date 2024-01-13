@@ -1,5 +1,5 @@
-import { CategoriesPage } from "./pages/CategoriesPage";
-import { TasksPage } from "./pages/TasksPage";
+import { CategoriesPage } from "../pages/CategoriesPage";
+import { TasksPage } from "../pages/TasksPage";
 
 export const API_URL = "http://localhost:8089/api/ToDoList";
 

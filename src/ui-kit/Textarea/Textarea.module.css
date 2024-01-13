@@ -1,7 +1,6 @@
 .textarea {
     padding: 5px 5px;
     width: calc(100% - 13px);
-    min-width: 300px;
     min-height: 26px;
     background-color: inherit;
     border: 2px solid #3F72AF;

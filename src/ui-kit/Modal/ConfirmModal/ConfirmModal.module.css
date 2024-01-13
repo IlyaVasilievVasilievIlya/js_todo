@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: auto 120px;
   grid-template-rows: auto auto auto;
-  row-gap: 20px;
+  row-gap: 30px;
   column-gap: 20px;
   color: #3F72AF;
   background-color: #DBE2EF;
@@ -20,4 +20,8 @@ h1 {
   grid-column: 1 / span 2;
   grid-row: 2 / span 1;
   color: black;
+}
+
+.container button {
+  justify-self: right;
 }

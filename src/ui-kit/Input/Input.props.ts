@@ -1,5 +1,3 @@
-import { EventHandler } from "react"
-
 export interface InputProps {
     name: string
     label: string

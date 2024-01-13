@@ -7,7 +7,7 @@
   background-color: #3F72AF;
   color: white;
   box-shadow: 0 0 10px 0 black;
-  border: 0px;
+  border: none;
 }
 
 .header__text {
@@ -44,8 +44,6 @@
 .header__nav-link_active:last-child {
   border-right: 0px;
 }
-
-
 
 /*-------------*/
 
@@ -91,7 +89,7 @@
 
 .modal__content{
   display: grid;
-  row-gap: 30px;
+  row-gap: 20px;
   column-gap: 20px;
 }
 
@@ -100,13 +98,13 @@
 }
 
 .twoCols{
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: 347px 347px;
+  grid-template-rows: 62px 62px;
 }
 
 .oneCol{
-  grid-template-columns: auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: 700px;
+  grid-template-rows: 62px 62px;
 }
 
 .twoCols div:last-child{
@@ -117,8 +115,7 @@
 /*--------------*/
 
 .custom-select__control {
-  width: calc(100% - 13px) !important;
-  min-width: 300px !important;
+  width: 100% !important;
   background-color: inherit !important;
   border: 2px solid #3F72AF !important;
   border-radius: 3px !important;
@@ -161,21 +158,34 @@
 }
 
 .custom-select__menu-list {
-  padding: 0 0 0 0 !important;
+  padding: none !important;
 }
 
-.custom-select__option:hover{
+.custom-select__option:hover {
   background-color:#65ABFF !important;
 }
 
-.custom-select__option--is-focused{
+.custom-select__option--is-focused {
   background-color:inherit !important;
 }
 
-.custom-select__option--is-selected{
+.custom-select__option--is-selected {
   background-color:#3F72AF !important;
 }
+  /*------------------*/
 
-/*-------------*/
+.errorMsg {
+  font-size: 36px;
+  color: red;
+}
 
+/*----------------*/
 
+.label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background-color: #DBE2EF;
+  color: #3F72AF;
+  z-index: 1;
+}

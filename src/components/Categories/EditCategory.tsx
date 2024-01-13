@@ -1,11 +1,10 @@
 import { Category } from '../model'
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { useAppDispatch } from '../../hooks/storeHook';
-import { editCategory } from '../../store/categoriesSlice'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { API_URL } from '../../consts';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '../../ui-kit/Input/Input';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
+import { editCategoryAsync } from '../../store/categoriesSlice'
 
 
 interface EditCategoryProps {
@@ -21,25 +20,9 @@ export const EditCategory: React.FC<EditCategoryProps> = ({ category, onDone }: 
 
     const dispatch = useAppDispatch();
 
-    const handleEdit = async (editedCategory: Category) => {
-
-        const response = await fetch(`${API_URL}/UpdateCategory`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(editedCategory)
-        });
-
-        if (response.ok)
-            dispatch(editCategory(editedCategory));
-
+    const editCategory = (editedCategory: Category) => {
+        dispatch(editCategoryAsync(editedCategory));
         closeForm();
-    }
-
-    const submitFormHandler: SubmitHandler<Category> = (editedCategory, event) => {
-        event?.preventDefault();
-        handleEdit(editedCategory);
     }
 
     const closeForm = () => {
@@ -47,10 +30,9 @@ export const EditCategory: React.FC<EditCategoryProps> = ({ category, onDone }: 
         onDone();
     }
 
-
     return (
         <ConfirmModal isOpened={true} title="Редактирование категории" submitText="Сохранить"
-            cancelText="Закрыть" onSubmit={handleSubmit(submitFormHandler)} onClose={closeForm}>
+            cancelText="Закрыть" onSubmit={handleSubmit(editCategory)} onClose={closeForm}>
             <div className="modal__content oneCol">
                 <Input
                     placeholder="Введите имя категории"

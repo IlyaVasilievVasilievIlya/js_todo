@@ -1,91 +1,89 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../styles.css';
-import { SingleTask} from './SingleTask';
-import { Category, Task, TaskView } from '../model';
-import { useTasks } from '../../hooks/tasks';
-import { useCategories } from '../../hooks/categories';
-import { ListElement } from '../ListElement';
-import { useAppDispatch } from '../../hooks/storeHook';
+import { SingleTask } from './SingleTask';
+import { Task, TaskView } from '../model';
+import { fetchCategoriesAsync } from '../../store/categoriesSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { EditTask } from './EditTask';
 import { ErrorMessage } from '../ErrorMessage';
-import { deleteTask } from '../../store/tasksSlice'
 import { Loader } from '../../ui-kit/Loader/Loader';
-import { API_URL } from '../../consts';
-
+import { deleteTaskAsync, fetchTasksAsync } from '../../store/tasksSlice';
 
 export const TaskList: React.FC = () => {
+  
+  const { tasks, error, loading } = useAppSelector(state => state.tasks);
+  const { categories, error: categoriesError } = useAppSelector(state => state.categories);
 
-  const {tasks, error, loading} = useTasks();
-  const {categories, error : categoriesFetchError} = useCategories();
-  
-  const [task, setTask] = useState<Task>({id:0, name:'', description:'', categoryId:0});
-  
+  const [task, setTask] = useState<Task>({ id: 0, name: '', description: '', categoryId: 0 });
+
   const dispatch = useAppDispatch();
 
-  const [isOnEdit, setIsOnEdit] = useState(false);
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
-  const submitDeleteHandler = async () => {
 
-    const response = await fetch(`${API_URL}/RemoveTask/${task.id}`);
+  const deleteTask =  () => {
 
-    if (response.ok){
-      dispatch(deleteTask(task.id));
-    }
+      dispatch(deleteTaskAsync(task.id));
 
-    setDeleteModal(false);
+      setIsOpenDeleteModal(false);
   }
-  
+
   function openDeleteModal(id: number) {
-    const selectedTask = tasks.find(el => el.id == id); 
-
-    if (selectedTask){
-      setTask(selectedTask);
-      setDeleteModal(true);
-    }
-  }
-
-  function openEditModal(id:number) {
     const selectedTask = tasks.find(el => el.id == id);
 
-    if (selectedTask){
+    if (selectedTask) {
       setTask(selectedTask);
-      setIsOnEdit(true);
+      setIsOpenDeleteModal(true);
     }
   }
 
-  let tasksWithCategoryName = tasks.map((task) : TaskView => {
+  function openEditModal(id: number) {
+    const selectedTask = tasks.find(el => el.id == id);
+
+    if (selectedTask) {
+      setTask(selectedTask);
+      setIsOpenEditModal(true);
+    }
+  }
+  
+  useEffect(() => {
+    dispatch(fetchTasksAsync());
+    dispatch(fetchCategoriesAsync());
+  }, [dispatch]);
+  
+  let tasksWithCategoryName = tasks.map((task): TaskView => {
     let category = categories.find(category => category.id == task.categoryId);
-    
-    return { id:task.id, categoryName: ((category) ? category.name : ''), description:task.description, name: task.name}
+
+    return { id: task.id, categoryName: ((category) ? category.name : ''), description: task.description, name: task.name }
   });
 
-  let taskList = tasksWithCategoryName.map( taskElem => 
-      <SingleTask task = {taskElem} handleEdit={openEditModal} handleDelete={openDeleteModal} key={taskElem.id}/>);
+  let taskList = tasksWithCategoryName.map(taskElem =>
+    <SingleTask task={taskElem} handleEdit={openEditModal} handleDelete={openDeleteModal} key={taskElem.id} />);
 
   return (
     <>
-      {!error && !categoriesFetchError && <div className="list">{taskList}</div>}
       {error && <ErrorMessage error={error}/>}
 
-      {loading && <Loader/>}
+      {categoriesError && <ErrorMessage error = {categoriesError} />}
+      
+      {loading && <Loader />}
 
-      {categoriesFetchError && <ErrorMessage error={categoriesFetchError}/>}
+      <div className="list">{taskList}</div>
 
-      <ConfirmModal isOpened={deleteModal} 
-          title = "Удаление задачи" 
-          submitText = "Да"
-          cancelText = "Нет" 
-          onSubmit={() => submitDeleteHandler()} 
-          onClose={() => setDeleteModal(false)}>
+      <ConfirmModal isOpened={isOpenDeleteModal}
+        title="Удаление задачи"
+        submitText="Да"
+        cancelText="Нет"
+        onSubmit={() => deleteTask()}
+        onClose={() => setIsOpenDeleteModal(false)}>
         <span>Вы уверены, что хотите удалить задачу "{task.name}"?</span>
       </ConfirmModal>
 
-      {isOnEdit && task && <EditTask task = {task} onDone = {() => setIsOnEdit(false)}/>}
+      {isOpenEditModal && <EditTask task={task} onDone={() => setIsOpenEditModal(false)} />}
     </>
   );
 }

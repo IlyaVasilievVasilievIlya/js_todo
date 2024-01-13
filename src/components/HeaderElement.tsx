@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 import { NavLink } from 'react-router-dom';
-import { navInfos } from '../consts';
+import { navInfos } from '../public/consts';
 
 interface Props  {
   children: React.ReactNode;

@@ -13,7 +13,6 @@ type Props = {
 export const SingleTask: React.FC<Props> = ({task:{categoryName, id, name, description}, handleEdit, handleDelete} : Props) => {
   return (
     <ListElement handleDelete={handleDelete} handleEdit={handleEdit} id={id} name={name} description={description}>
-        <span className="list__element-info-name">{name}</span>
         <div className="list__element-info-category">
           {categoryName && <span className="icon"><CategoryIcon/></span>}
           <span className="list__element-info-category-name">{categoryName}</span>

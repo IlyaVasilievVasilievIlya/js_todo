@@ -32,7 +32,6 @@ button {
 
 .secondaryBtn {
     width: 120px;
-    justify-self: right;
     background-color: transparent;
     color: #3F72AF;
     border: 2px solid #3F72AF;
@@ -67,8 +66,6 @@ button {
 }
 
 .closeBtn {
-    align-self: start;
-    justify-self: right;
     background-image: url("../../public/close.svg");
 }
 

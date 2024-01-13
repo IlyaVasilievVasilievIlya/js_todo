@@ -1,14 +1,12 @@
 import { Category } from '../model'
 import { useState } from 'react'
 import { useAppDispatch } from '../../hooks/storeHook';
-import { addCategory } from '../../store/categoriesSlice'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { API_URL } from '../../consts';
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { Input } from '../../ui-kit/Input/Input';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { Button } from '../../ui-kit/Button/Button';
-
+import { addCategoryAsync } from '../../store/categoriesSlice'
 
 export const CreateCategory: React.FC = () => {
 
@@ -18,29 +16,13 @@ export const CreateCategory: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleCreate = async (newCategory: Category) => {
+    const createCategory = (newCategory: Category) => {
 
-        const response = await fetch(`${API_URL}/AddCategory`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(newCategory)
-        });
-
-        if (response.ok) {
-            let responseData = await response.json();
-            dispatch(addCategory(responseData));
-        }
+        dispatch(addCategoryAsync(newCategory));
 
         closeForm();
     }
-
-    const submitFormHandler: SubmitHandler<Category> = (newCategory, event) => {
-        event?.preventDefault();
-        handleCreate(newCategory);
-    }
-
+    
     const closeForm = () => {
         setModal(false);
         reset();
@@ -52,7 +34,7 @@ export const CreateCategory: React.FC = () => {
                 Добавить категорию
             </Button>
             <ConfirmModal isOpened={modal} title="Создание категории" submitText="Создать"
-                cancelText="Закрыть" onSubmit={handleSubmit(submitFormHandler)} onClose={closeForm}>
+                cancelText="Закрыть" onSubmit={handleSubmit(createCategory)} onClose={closeForm}>
                 <div className="modal__content oneCol">
                     <Input
                         placeholder="Введите имя категории"

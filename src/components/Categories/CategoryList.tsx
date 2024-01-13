@@ -1,36 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import '../styles.css';
 import { Category } from '../model';
-import { useCategories } from '../../hooks/categories';
 import { SingleCategory } from './SingleCategory';
-import { deleteCategory } from '../../store/categoriesSlice'
+import { deleteCategoryAsync, fetchCategoriesAsync } from '../../store/categoriesSlice'
 import { ErrorMessage } from '../ErrorMessage';
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { EditCategory } from './EditCategory';
 import { Loader } from '../../ui-kit/Loader/Loader';
-import { useAppDispatch } from '../../hooks/storeHook';
-import { API_URL } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 
 export const CategoryList: React.FC = () => {
 
-  const { categories, error, loading } = useCategories();
-  const [category, setCategory] = useState<Category>({ id: 0, name: '', description: '' });
-
+  const {categories, error, loading} = useAppSelector(state => state.categories);
   const dispatch = useAppDispatch();
 
-  const [isOnEdit, setIsOnEdit] = useState(false);
+  const [category, setCategory] = useState<Category>({ id: 0, name: '', description: '' });
 
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
-  const submitDeleteHandler = async () => {
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
-    const response = await fetch(`${API_URL}/RemoveCategory/${category.id}`);
+  const deleteCategory = () => {
 
-    if (response.ok)
-      dispatch(deleteCategory(category.id));
+    dispatch(deleteCategoryAsync(category.id));
 
-    setDeleteModal(false);
+    setIsOpenDeleteModal(false);
   }
 
   function openDeleteModal(id: number) {
@@ -38,7 +33,7 @@ export const CategoryList: React.FC = () => {
 
     if (selectedCategory) {
       setCategory(selectedCategory);
-      setDeleteModal(true);
+      setIsOpenDeleteModal(true);
     }
   }
 
@@ -47,9 +42,14 @@ export const CategoryList: React.FC = () => {
 
     if (selectedCategory) {
       setCategory(selectedCategory);
-      setIsOnEdit(true);
+      setIsOpenEditModal(true);
     }
   }
+
+  useEffect(() => {
+    dispatch(fetchCategoriesAsync());
+  }, [dispatch]);
+
 
   let categoryList = categories.map(category =>
       <SingleCategory category={category} key={category.id} handleEdit={openEditModal} handleDelete={openDeleteModal}/>);
@@ -58,22 +58,22 @@ export const CategoryList: React.FC = () => {
     <>
       {error && <ErrorMessage error={error} />}
 
-      <div className="list">{categoryList}</div>
-
       {loading && <Loader />}
 
+      <div className="list">{categoryList}</div>
+
       <ConfirmModal
-        isOpened={deleteModal}
+        isOpened={isOpenDeleteModal}
         title="Удаление категории"
         submitText="Да"
         cancelText="Нет"
-        onSubmit={() => submitDeleteHandler()}
-        onClose={() => setDeleteModal(false)}>
+        onSubmit={() => deleteCategory()}
+        onClose={() => setIsOpenDeleteModal(false)}>
         <span>Вы уверены, что хотите удалить категорию "{category.name}"?</span>
       </ConfirmModal>
 
-      {isOnEdit && <EditCategory
-        category={category} onDone={() => setIsOnEdit(false)} />}
+      {isOpenEditModal && <EditCategory
+        category={category} onDone={() => setIsOpenEditModal(false)} />}
     </>
   );
 }

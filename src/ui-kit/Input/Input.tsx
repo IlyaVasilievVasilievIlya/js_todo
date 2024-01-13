@@ -6,7 +6,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     name, label, isRequired, type, placeholder, errorMessage, onChange}, ref) => {
 
     return (
-        <div> 
+        <div className="container"> 
             <label className={`${styles.label} ${isRequired ? styles.required : ''}`}>
                 {label}{isRequired && <span>*</span>}
             </label>

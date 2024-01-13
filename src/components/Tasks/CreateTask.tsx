@@ -1,11 +1,9 @@
-import { useCategories } from '../../hooks/categories'
-import { Category, IOption, Task } from '../model'
+import { IOption, Task } from '../model'
 import { useState } from 'react'
-import { useAppDispatch} from '../../hooks/storeHook';
-import { addTask} from '../../store/tasksSlice'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector} from '../../hooks/storeHook';
+import { addTaskAsync } from '../../store/tasksSlice'
+import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
-import { API_URL } from '../../consts';
 import { Input } from '../../ui-kit/Input/Input';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
@@ -15,7 +13,7 @@ import { Button } from '../../ui-kit/Button/Button';
 export const CreateTask: React.FC = () => {
     
     const {register, handleSubmit, formState: {errors}, reset, control} = useForm<Task>();
-    const {categories} = useCategories();
+    const {categories} = useAppSelector(state => state.categories);
     
     const [modal, setModal] = useState(false);
 
@@ -23,31 +21,10 @@ export const CreateTask: React.FC = () => {
     
     let categoryList = categories.map((category): IOption =>  ({value: category.id,  label: category.name}));
 
-    const handleCreate = async (newTask: Task) => {
-
-        console.log(newTask);
-        const response = await fetch(`${API_URL}/AddTask`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(newTask)
-        });
-        
-        if (response.ok){
-            let responseData = await response.json();
-            dispatch(addTask(responseData));
-        }
-
-        closeForm();
-    }
-
-    const submitFormHandler: SubmitHandler<Task> = (newTask, event) => {
-
-        console.log(categoryList);
-        event?.preventDefault();
+    const createTask = (newTask: Task) => {
         newTask.categoryId ??= 0;
-        handleCreate(newTask);
+        dispatch(addTaskAsync(newTask));
+        closeForm();
     }
 
     const closeForm = () => {
@@ -64,7 +41,7 @@ return (
             Добавить задачу
         </Button>
         <ConfirmModal isOpened={modal} title= "Создание задачи" submitText = "Создать" 
-            cancelText = "Закрыть" onSubmit={handleSubmit(submitFormHandler)} onClose={closeForm}>
+            cancelText = "Закрыть" onSubmit={handleSubmit(createTask)} onClose={closeForm}>
             <div className = "modal__content twoCols">
                 <Input
                     label="Имя"

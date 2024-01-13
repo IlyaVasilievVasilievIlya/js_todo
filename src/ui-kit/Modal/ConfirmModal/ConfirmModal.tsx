@@ -4,8 +4,6 @@ import { Button } from '../../Button/Button'
 import { ConfirmModalProps } from './ConfirmModal.props'
 
 export function ConfirmModal({children, isOpened, title, submitText, cancelText, onSubmit, onClose}: ConfirmModalProps){
-    
-    console.log("*");
     return (
         <OverlayingModal isOpened={isOpened} onClose={onClose}>
             <div className={styles.container}>
