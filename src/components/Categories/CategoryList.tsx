@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import '../styles.css';
-import { Category } from '../model';
-import { SingleCategory } from './SingleCategory';
-import { deleteCategoryAsync, fetchCategoriesAsync } from '../../store/categoriesSlice'
-import { ErrorMessage } from '../ErrorMessage';
-import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
-import { EditCategory } from './EditCategory';
-import { Loader } from '../../ui-kit/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
+import { deleteCategoryAsync, fetchCategoriesAsync } from '../../store/Categories/categoriesActions';
+import { Loader } from '../../ui-kit/Loader/Loader';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
+import { ErrorMessage } from '../ErrorMessage';
+import { Category } from '../model';
+import '../styles.css';
+import { EditCategory } from './EditCategory';
+import { SingleCategory } from './SingleCategory';
 
 export const CategoryList: React.FC = () => {
 
@@ -60,7 +60,7 @@ export const CategoryList: React.FC = () => {
 
       {loading && <Loader />}
 
-      <div className="list">{categoryList}</div>
+      {!loading && !error && <div className="list">{categoryList}</div>}
 
       <ConfirmModal
         isOpened={isOpenDeleteModal}

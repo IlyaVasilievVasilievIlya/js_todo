@@ -1,8 +1,6 @@
-export interface TextareaProps {
-    name: string
+import { DetailedHTMLProps, TextareaHTMLAttributes } from "react"
+
+export interface TextareaProps extends DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
     label: string
-    isRequired: boolean
-    placeholder: string
-    onChange: any
     errorMessage: string | undefined
 }

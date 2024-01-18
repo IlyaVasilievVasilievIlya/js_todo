@@ -1,0 +1,12 @@
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #3F72AF;
+  background-color: #DBE2EF;
+  border-radius: 3px;
+  box-shadow: 0 0 15px -2px black;
+  z-index:100;
+  gap: 20px;
+}
+

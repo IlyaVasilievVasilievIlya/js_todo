@@ -1,19 +1,17 @@
 import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import { navInfos } from './public/consts';
+import { routeInfos } from './public/consts';
 
 export const ThemeContext = React.createContext('tasks');
 
 const App: React.FC = function () {
 
-  const routes = navInfos.map(navInfo => <Route {...navInfo}/>)
+  const router = createBrowserRouter([...routeInfos])
 
   return (
     <div className="App">
-      <Routes>
-        {routes}
-      </Routes>
+      <RouterProvider router={router}/>
     </div>
   );
 }

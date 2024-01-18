@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles.css';
 import { ListElement } from '../ListElement';
-import {ReactComponent as CategoryIcon} from '../../public/folder.svg';
+import { ReactComponent as CategoryIcon } from '../../public/folder.svg';
 import { TaskView } from '../model';
 
 type Props = {
@@ -10,13 +10,14 @@ type Props = {
   handleDelete: (id: number) => void
 }
 
-export const SingleTask: React.FC<Props> = ({task:{categoryName, id, name, description}, handleEdit, handleDelete} : Props) => {
+export const SingleTask: React.FC<Props> = ({ task: { categoryName, id, name, description }, handleEdit, handleDelete }: Props) => {
   return (
-    <ListElement handleDelete={handleDelete} handleEdit={handleEdit} id={id} name={name} description={description}>
+    <ListElement handleDelete={handleDelete} handleEdit={handleEdit} id={id} name={name} description={description}
+      category={
         <div className="list__element-info-category">
-          {categoryName && <span className="icon"><CategoryIcon/></span>}
+          {categoryName && <span className="icon"><CategoryIcon /></span>}
           <span className="list__element-info-category-name">{categoryName}</span>
         </div>
-    </ListElement>
+      }/>
   )
 }

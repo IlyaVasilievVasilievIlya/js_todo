@@ -1,9 +1,6 @@
-export interface InputProps {
-    name: string
+import { DetailedHTMLProps, InputHTMLAttributes } from "react"
+
+export interface InputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label: string
-    placeholder: string
-    isRequired: boolean
-    type: string
-    onChange: any
     errorMessage: string | undefined
 }

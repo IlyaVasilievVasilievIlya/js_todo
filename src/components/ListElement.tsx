@@ -5,19 +5,19 @@ import { Button } from '../ui-kit/Button/Button';
 type Props = {
   handleEdit: (id: number) => void
   handleDelete: (id: number) => void
-  children?: React.ReactNode
+  category?: React.ReactNode
   id: number
   name: string
   description: string
 }
 
-export const ListElement: React.FC<Props> = ({ children, handleEdit, handleDelete, id, name, description }: Props) => {
+export const ListElement: React.FC<Props> = ({ category, handleEdit, handleDelete, id, name, description }: Props) => {
   return (
     <div className="list__element">
       <div className="list__element-info">
         <div>
           <span className="list__element-info-name">{name}</span>
-          {children}
+          {category}
         </div>
         <span className="list__element-info-desc">{description}</span>
       </div>

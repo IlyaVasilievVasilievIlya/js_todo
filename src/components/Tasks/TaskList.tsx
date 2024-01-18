@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import '../styles.css';
 import { SingleTask } from './SingleTask';
 import { Task, TaskView } from '../model';
-import { fetchCategoriesAsync } from '../../store/categoriesSlice'
+import { fetchCategoriesAsync } from '../../store/Categories/categoriesActions'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { EditTask } from './EditTask';
 import { ErrorMessage } from '../ErrorMessage';
 import { Loader } from '../../ui-kit/Loader/Loader';
-import { deleteTaskAsync, fetchTasksAsync } from '../../store/tasksSlice';
+import { deleteTaskAsync, fetchTasksAsync } from '../../store/Tasks/tasksActions';
 
 export const TaskList: React.FC = () => {
   
@@ -72,7 +72,7 @@ export const TaskList: React.FC = () => {
       
       {loading && <Loader />}
 
-      <div className="list">{taskList}</div>
+      {!loading && !error && <div className="list">{taskList}</div>}
 
       <ConfirmModal isOpened={isOpenDeleteModal}
         title="Удаление задачи"
