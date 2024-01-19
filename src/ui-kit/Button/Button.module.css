@@ -76,3 +76,26 @@ button {
 .deleteBtn {
     background-image: url("../../public/delete.svg");
 }
+
+.dropDownArrow, .dropDownArrow-opened {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: inherit;
+    background-image: url("../../public/dropDownArrow.svg");
+}
+
+.dropDownArrow-opened {
+    background-image: url("../../public/dropDownArrow.svg");
+    transform: rotate(0.5turn);
+}
+
+.closeBtnSmall {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: inherit;
+    color: red;
+    margin: 5px;
+    background-image: url("../../public/closeSelection.svg");
+}

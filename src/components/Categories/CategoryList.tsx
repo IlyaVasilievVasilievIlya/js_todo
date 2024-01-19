@@ -20,6 +20,11 @@ export const CategoryList: React.FC = () => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  
+  useEffect(() => {
+    dispatch(fetchCategoriesAsync());
+  }, [dispatch]);
+
 
   const deleteCategory = () => {
 
@@ -45,11 +50,6 @@ export const CategoryList: React.FC = () => {
       setIsOpenEditModal(true);
     }
   }
-
-  useEffect(() => {
-    dispatch(fetchCategoriesAsync());
-  }, [dispatch]);
-
 
   let categoryList = categories.map(category =>
       <SingleCategory category={category} key={category.id} handleEdit={openEditModal} handleDelete={openDeleteModal}/>);

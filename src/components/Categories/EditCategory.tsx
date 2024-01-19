@@ -18,7 +18,7 @@ interface EditCategoryProps {
 
 export const EditCategory: React.FC<EditCategoryProps> = ({ category, onDone }: EditCategoryProps) => {
 
-    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Category>({
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Category>({
         defaultValues: category
     });
 

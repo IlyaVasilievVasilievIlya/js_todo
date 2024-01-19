@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Select from 'react-select';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { addTaskAsync } from '../../store/Tasks/tasksActions';
 import { Button } from '../../ui-kit/Button/Button';
@@ -11,6 +10,7 @@ import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { IOption, Task } from '../model';
+import { Select } from '../../ui-kit/Select/Select';
 
 
 export const CreateTask: React.FC = () => {
@@ -35,9 +35,6 @@ export const CreateTask: React.FC = () => {
         reset();
     }
 
-    const getValue = (categoryId: number) =>
-        categoryId ? categoryList.find(category => category.value === categoryId) : 0;
-
     return (
         <>
             <Button className='actionBtn' type="button" onClick={() => setModal(true)}>
@@ -58,24 +55,18 @@ export const CreateTask: React.FC = () => {
                                 maxLength: { value: 255, message: "Имя не должно содержать более 255 символов" }
                             })}
                         />
-                        <div>
-                            <label className="label" >
-                                Категория
-                            </label>
-                            <Controller
-                                control={control}
-                                name="categoryId"
-                                render={({ field: { onChange, value } }) => (
-                                    <Select
-                                        classNamePrefix='custom-select'
-                                        placeholder='Выберите категорию'
-                                        className="select"
-                                        options={categoryList}
-                                        value={getValue(value)}
-                                        onChange={(newValue) => onChange((newValue as IOption)?.value)}
-                                        isClearable={true}
-                                        isSearchable={false} />)} />
-                        </div>
+                        <Controller
+                            control={control}
+                            name="categoryId"
+                            render={({ field: { onChange, value } }) => (
+                                <Select
+                                    placeholder='Выберите категорию'
+                                    options={categoryList}
+                                    value={value ?? 0}
+                                    label="Категория"
+                                    required={false}
+                                    clearable={true}
+                                    onChange={onChange} />)} />
                         <Textarea
                             placeholder="Введите описание задачи"
                             label="Описание"

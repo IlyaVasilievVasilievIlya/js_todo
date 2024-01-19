@@ -24,6 +24,10 @@ export const TaskList: React.FC = () => {
 
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
+  useEffect(() => {
+    dispatch(fetchTasksAsync());
+    dispatch(fetchCategoriesAsync());
+  }, [dispatch]);
 
   const deleteTask =  () => {
 
@@ -49,11 +53,6 @@ export const TaskList: React.FC = () => {
       setIsOpenEditModal(true);
     }
   }
-  
-  useEffect(() => {
-    dispatch(fetchTasksAsync());
-    dispatch(fetchCategoriesAsync());
-  }, [dispatch]);
   
   let tasksWithCategoryName = tasks.map((task): TaskView => {
     let category = categories.find(category => category.id == task.categoryId);

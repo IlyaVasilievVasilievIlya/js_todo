@@ -7,7 +7,7 @@ export const ThemeContext = React.createContext('tasks');
 
 const App: React.FC = function () {
 
-  const router = createBrowserRouter([...routeInfos])
+  const router = createBrowserRouter(routeInfos);
 
   return (
     <div className="App">

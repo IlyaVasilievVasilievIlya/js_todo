@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Select from 'react-select';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { editTaskAsync } from '../../store/Tasks/tasksActions';
 import { Button } from '../../ui-kit/Button/Button';
@@ -11,6 +10,7 @@ import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { Category, IOption, Task } from '../model';
+import { Select } from '../../ui-kit/Select/Select';
 
 
 interface EditTaskProps {
@@ -21,12 +21,17 @@ interface EditTaskProps {
 export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProps) => {
 
     const { register, handleSubmit, setValue, formState: { errors }, reset, control } = useForm<Task>(
-        { defaultValues: { ...task, categoryId: undefined } }
+        { defaultValues: task }
     );
 
     const { categories } = useAppSelector(state => state.categories);
 
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        setValue('categoryId', task.categoryId);
+    }, []);
+
 
     let categoryList = categories.map((elem: Category): IOption => ({ value: elem.id, label: elem.name }));
 
@@ -40,13 +45,6 @@ export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProp
         reset();
         onDone();
     }
-
-    useEffect(() => {
-        setValue('categoryId', task.categoryId);
-    }, []);
-
-    const getValue = (categoryId: number) =>
-        categoryId ? categoryList.find(category => category.value === categoryId) : null
 
     return (
         <OverlayingModal isOpened={true} onClose={closeForm}>
@@ -63,24 +61,18 @@ export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProp
                             required: `Поле должно быть обязательным`,
                             maxLength: { value: 255, message: "Имя не должно содержать более 255 символов" }
                         })} />
-                    <div>
-                        <label className="label">
-                            Категория
-                        </label>
-                        <Controller
-                            control={control}
-                            name="categoryId"
-                            render={({ field: { onChange, value } }) => (
-                                <Select
-                                    classNamePrefix='custom-select'
-                                    placeholder='Выберите категорию'
-                                    className="select"
-                                    options={categoryList}
-                                    value={getValue(value)}
-                                    onChange={(newValue) => onChange((newValue as IOption)?.value)}
-                                    isClearable={true}
-                                    isSearchable={false} />)} />
-                    </div>
+                    <Controller
+                        control={control}
+                        name="categoryId"
+                        render={({ field: { onChange, value } }) => (
+                            <Select
+                                placeholder='Выберите категорию'
+                                options={categoryList}
+                                label="Категория"
+                                value={value ?? 0}
+                                required={false}
+                                clearable={true}
+                                onChange={onChange} />)} />
                     <Textarea
                         placeholder="Введите описание задачи"
                         label="Описание"

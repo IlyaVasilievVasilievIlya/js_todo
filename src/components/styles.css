@@ -114,66 +114,6 @@
 
 /*--------------*/
 
-.custom-select__control {
-  width: 100% !important;
-  background-color: inherit !important;
-  border: 2px solid #3F72AF !important;
-  border-radius: 3px !important;
-}
-
-.custom-select__control:hover {
-  border-color: #257FEA !important;
-}
-
-.custom-select__control--is-focused {
-  box-shadow: none !important;
-  border-color: #257FEA !important;
-}
-
-.custom-select__indicator-separator{
-  display: none;
-}
-
-.custom-select__indicator {
-  color:#3F72AF !important;
-}
-
-.custom-select__indicators .custom-select__dropdown-indicator svg path{
-  d: path("M 3,6.5 10,13.5 17,6.5 z") !important;
-}
-
-.custom-select__indicator:hover {
-  color:#257FEA !important;
-}
-
-.custom-select__control--menu-is-open .custom-select__dropdown-indicator svg{
-  transform: rotate(0.5turn) !important;
-}
-
-
-.custom-select__menu {
-  background-color: #DBE2EF !important;
-  border: 2px solid #257FEA !important;
-  box-shadow: 5px 5px 15px -5px black !important;
-}
-
-.custom-select__menu-list {
-  padding: none !important;
-}
-
-.custom-select__option:hover {
-  background-color:#65ABFF !important;
-}
-
-.custom-select__option--is-focused {
-  background-color:inherit !important;
-}
-
-.custom-select__option--is-selected {
-  background-color:#3F72AF !important;
-}
-  /*------------------*/
-
 .errorMsg {
   font-size: 36px;
   color: red;
