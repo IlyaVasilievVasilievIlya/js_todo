@@ -1,20 +1,17 @@
-import { PayloadAction, UnknownAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Category } from '../../components/model';
 import { addCategoryAsync, deleteCategoryAsync, editCategoryAsync, fetchCategoriesAsync } from './categoriesActions';
 
 type CategoriesState = {
     categories: Category[];
     loading: boolean;
-    error?: string;
+    fetchError?: string;
+    actionError?: string;
 }
 
 const initialState: CategoriesState = {
     categories: [],
-    loading: false
-}
-
-function isError(action: UnknownAction) {
-    return action.type.endsWith('rejected');
+    loading: false,
 }
 
 const categorySlice = createSlice({
@@ -26,34 +23,43 @@ const categorySlice = createSlice({
         builder
             .addCase(fetchCategoriesAsync.pending, (state) => {
                 state.loading = true;
-                state.error = undefined;
+                state.fetchError = undefined;
             })
             .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
                 state.loading = false;
                 state.categories = action.payload;
             })
             .addCase(addCategoryAsync.pending, (state) => {
-                state.error = undefined;
+                state.actionError = undefined;
             })
             .addCase(addCategoryAsync.fulfilled, (state, action) => {
                 state.categories.unshift(action.payload);
             })
             .addCase(deleteCategoryAsync.pending, (state) => {
-                state.error = undefined;
+                state.actionError = undefined;
             })
             .addCase(deleteCategoryAsync.fulfilled, (state, action) => {
                 state.categories = state.categories.filter((elem: Category) => elem.id != action.payload);
             })
             .addCase(editCategoryAsync.pending, (state) => {
-                state.error = undefined;
+                state.actionError = undefined;
             })
             .addCase(editCategoryAsync.fulfilled, (state, action) => {
                 state.categories = state.categories.map((elem: Category) => (
                     elem.id == action.payload.id) ? action.payload : elem);
             })
-            .addMatcher(isError, (state, action: PayloadAction<string>) => {
-                state.error = action.payload;
+            .addCase(fetchCategoriesAsync.rejected, (state, action) => {
+                state.fetchError = action.payload;
                 state.loading = false;
+            })
+            .addCase(addCategoryAsync.rejected, (state, action) => {
+                state.actionError = action.payload;
+            })
+            .addCase(editCategoryAsync.rejected, (state, action) => {
+                state.actionError = action.payload;
+            })
+            .addCase(deleteCategoryAsync.rejected, (state, action) => {
+                state.actionError = action.payload;
             })
             ;
     }

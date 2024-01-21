@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { editTaskAsync } from '../../store/Tasks/tasksActions';
@@ -11,6 +11,8 @@ import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingMo
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { Category, IOption, Task } from '../model';
 import { Select } from '../../ui-kit/Select/Select';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { Loader } from '../../ui-kit/Loader/Loader';
 
 
 interface EditTaskProps {
@@ -32,16 +34,24 @@ export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProp
         setValue('categoryId', task.categoryId);
     }, []);
 
+    const [error, setError] = useState<string | undefined>(undefined);
+
+    const [loading, setLoading] = useState(false);
 
     let categoryList = categories.map((elem: Category): IOption => ({ value: elem.id, label: elem.name }));
 
     const editTask = (editedTask: Task) => {
         editedTask.categoryId ??= 0;
-        dispatch(editTaskAsync(editedTask));
-        closeForm();
+        setLoading(true);
+        dispatch(editTaskAsync(editedTask))
+        .then(unwrapResult)
+        .then(_ => closeForm(), 
+        rejected => { setLoading(false); setError(rejected);});
     }
 
     const closeForm = () => {
+        setLoading(false);
+        setError(undefined);
         reset();
         onDone();
     }
@@ -82,8 +92,8 @@ export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProp
                             maxLength: { value: 1536, message: "Описание не должно содержать более 1536 символов" }
                         })} />
                 </div>
-                <ModalActions>
-                    <Button type="submit" className="primaryBtn" onClick={handleSubmit(editTask)}>Сохранить</Button>
+                <ModalActions errorMessage={error}>
+                    <Button type="submit" className="primaryBtn" onClick={handleSubmit(editTask)}>{loading? <Loader className='buttonLoading'/> : `Сохранить`}</Button>
                     <Button type="button" className="secondaryBtn" onClick={closeForm}>Закрыть</Button>
                 </ModalActions>
             </ModalContainer>

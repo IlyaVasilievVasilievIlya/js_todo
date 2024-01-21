@@ -1,9 +1,11 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/storeHook';
 import { addCategoryAsync } from '../../store/Categories/categoriesActions';
 import { Button } from '../../ui-kit/Button/Button';
 import { Input } from '../../ui-kit/Input/Input';
+import { Loader } from '../../ui-kit/Loader/Loader';
 import { ModalActions } from '../../ui-kit/Modal/ModalActions/ModalActions';
 import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer';
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
@@ -17,20 +19,29 @@ export const CreateCategory: React.FC = () => {
 
     const [modal, setModal] = useState(false);
 
+    const [error, setError] = useState<string | undefined>(undefined);
+
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useAppDispatch();
 
+
     const createCategory = (newCategory: Category) => {
-
-        dispatch(addCategoryAsync(newCategory));
-
-        closeForm();
+        setLoading(true);
+        dispatch(addCategoryAsync(newCategory))
+        .then(unwrapResult)
+        .then(_ => closeForm(), 
+        rejected => { setLoading(false); setError(rejected);});
     }
     
     const closeForm = () => {
+        setLoading(false);
+        setError(undefined);
         setModal(false);
         reset();
     }
 
+    console.log('&&');
     return (
         <>
             <Button className="actionBtn" type="button" onClick={() => setModal(true)}>
@@ -66,8 +77,8 @@ export const CreateCategory: React.FC = () => {
                                 }
                             })} />
                     </div>
-                    <ModalActions>
-                        <Button type="submit" className="primaryBtn" onClick={handleSubmit(createCategory)}>Создать</Button>
+                    <ModalActions errorMessage={error}>
+                        <Button type="submit" className="primaryBtn" onClick={handleSubmit(createCategory)}>{loading? <Loader className='buttonLoading'/> : `Создать`}</Button>
                         <Button type="button" className="secondaryBtn" onClick={closeForm}>Закрыть</Button>
                     </ModalActions>     
                 </ModalContainer>

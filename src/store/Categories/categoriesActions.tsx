@@ -6,15 +6,15 @@ export const fetchCategoriesAsync = createAsyncThunk<Category[], undefined, { re
     'categories/fetchCategoriesAsync',
     async function (_, { rejectWithValue }) {
         try {
-
+            
             const response = await fetch(`${API_URL}/GetCategories`);
-
+            
             if (!response.ok) {
                 throw new Error('Failed to fetch');
             }
-
+            
             let body: Category[] = await response.json();
-
+            
             return body;
         } catch (e: unknown) {
             return rejectWithValue((e as Error).message);

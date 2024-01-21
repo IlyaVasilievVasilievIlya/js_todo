@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
-import { deleteCategoryAsync, fetchCategoriesAsync } from '../../store/Categories/categoriesActions';
+import { fetchCategoriesAsync } from '../../store/Categories/categoriesActions';
 import { Loader } from '../../ui-kit/Loader/Loader';
-import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 import { ErrorMessage } from '../ErrorMessage';
 import { Category } from '../model';
 import '../styles.css';
 import { EditCategory } from './EditCategory';
 import { SingleCategory } from './SingleCategory';
+import { DeleteCategory } from './DeleteCategory';
 
 export const CategoryList: React.FC = () => {
 
-  const {categories, error, loading} = useAppSelector(state => state.categories);
+  const {categories, fetchError, loading } = useAppSelector(state => state.categories);
   const dispatch = useAppDispatch();
 
   const [category, setCategory] = useState<Category>({ id: 0, name: '', description: '' });
@@ -23,15 +23,7 @@ export const CategoryList: React.FC = () => {
   
   useEffect(() => {
     dispatch(fetchCategoriesAsync());
-  }, [dispatch]);
-
-
-  const deleteCategory = () => {
-
-    dispatch(deleteCategoryAsync(category.id));
-
-    setIsOpenDeleteModal(false);
-  }
+  }, []);
 
   function openDeleteModal(id: number) {
     let selectedCategory = categories.find(el => el.id == id);
@@ -56,21 +48,13 @@ export const CategoryList: React.FC = () => {
 
   return (
     <>
-      {error && <ErrorMessage error={error} />}
+      {!loading && fetchError && <ErrorMessage error={fetchError} />}
 
       {loading && <Loader />}
 
-      {!loading && !error && <div className="list">{categoryList}</div>}
+      {!loading && !fetchError && <div className="list">{categoryList}</div>}
 
-      <ConfirmModal
-        isOpened={isOpenDeleteModal}
-        title="Удаление категории"
-        submitText="Да"
-        cancelText="Нет"
-        onSubmit={() => deleteCategory()}
-        onClose={() => setIsOpenDeleteModal(false)}>
-        <span>Вы уверены, что хотите удалить категорию "{category.name}"?</span>
-      </ConfirmModal>
+      {isOpenDeleteModal && <DeleteCategory category={category} onDone={() => setIsOpenDeleteModal(false)}/>}
 
       {isOpenEditModal && <EditCategory
         category={category} onDone={() => setIsOpenEditModal(false)} />}

@@ -1,5 +1,11 @@
 .container {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 20px;
+    min-height: 50px; 
+}
+
+.container > span {
+    min-width: 60px;
 }

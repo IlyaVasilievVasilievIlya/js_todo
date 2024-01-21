@@ -11,6 +11,8 @@ import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingMo
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
 import { IOption, Task } from '../model';
 import { Select } from '../../ui-kit/Select/Select';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { Loader } from '../../ui-kit/Loader/Loader';
 
 
 export const CreateTask: React.FC = () => {
@@ -20,17 +22,26 @@ export const CreateTask: React.FC = () => {
 
     const [modal, setModal] = useState(false);
 
+    const [error, setError] = useState<string | undefined>(undefined);
+
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useAppDispatch();
 
     let categoryList = categories.map((category): IOption => ({ value: category.id, label: category.name }));
 
     const createTask = (newTask: Task) => {
         newTask.categoryId ??= 0;
-        dispatch(addTaskAsync(newTask));
-        closeForm();
+        setLoading(true);
+        dispatch(addTaskAsync(newTask))
+        .then(unwrapResult)
+        .then(_ => closeForm(), 
+        rejected => { setLoading(false); setError(rejected);});
     }
 
     const closeForm = () => {
+        setLoading(false);
+        setError(undefined);
         setModal(false);
         reset();
     }
@@ -77,8 +88,8 @@ export const CreateTask: React.FC = () => {
                             })}
                         />
                     </div>
-                    <ModalActions>
-                        <Button type="submit" className="primaryBtn" onClick={handleSubmit(createTask)}>Создать</Button>
+                    <ModalActions errorMessage={error}>
+                        <Button type="submit" className="primaryBtn" onClick={handleSubmit(createTask)}>{loading? <Loader className='buttonLoading'/> : `Создать`}</Button>
                         <Button type="button" className="secondaryBtn" onClick={closeForm}>Закрыть</Button>
                     </ModalActions>
                 </ModalContainer>

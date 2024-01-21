@@ -1,12 +1,12 @@
-import React from 'react';
-import styles from './Loader.module.css'
+import styles from './Loader.module.css';
+import { LoaderProps } from './Loader.props';
 
-export function Loader(){
+
+
+export function Loader({className}: LoaderProps){
     return (
-        <div className={styles.loading}>
-            <span>.</span>
-            <span>.</span>
-            <span>.</span>
+        <div className={`${styles.container} ${styles[`${className}`]}`}>
+            <div className={styles.loading}></div>
         </div>
     )
 }

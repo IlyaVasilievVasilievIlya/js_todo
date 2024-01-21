@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import '../styles.css';
-import { SingleTask } from './SingleTask';
-import { Task, TaskView } from '../model';
-import { fetchCategoriesAsync } from '../../store/Categories/categoriesActions'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
-import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
-import { EditTask } from './EditTask';
-import { ErrorMessage } from '../ErrorMessage';
+import { fetchCategoriesAsync } from '../../store/Categories/categoriesActions';
+import { fetchTasksAsync } from '../../store/Tasks/tasksActions';
 import { Loader } from '../../ui-kit/Loader/Loader';
-import { deleteTaskAsync, fetchTasksAsync } from '../../store/Tasks/tasksActions';
+import { ErrorMessage } from '../ErrorMessage';
+import { Task, TaskView } from '../model';
+import '../styles.css';
+import { DeleteTask } from './DeleteTask';
+import { EditTask } from './EditTask';
+import { SingleTask } from './SingleTask';
 
 export const TaskList: React.FC = () => {
   
-  const { tasks, error, loading } = useAppSelector(state => state.tasks);
-  const { categories, error: categoriesError } = useAppSelector(state => state.categories);
+  const { tasks, fetchError, loading } = useAppSelector(state => state.tasks);
+  const { categories, fetchError: categoriesFetchError } = useAppSelector(state => state.categories);
+  const dispatch = useAppDispatch();
 
   const [task, setTask] = useState<Task>({ id: 0, name: '', description: '', categoryId: 0 });
-
-  const dispatch = useAppDispatch();
 
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
@@ -27,14 +26,7 @@ export const TaskList: React.FC = () => {
   useEffect(() => {
     dispatch(fetchTasksAsync());
     dispatch(fetchCategoriesAsync());
-  }, [dispatch]);
-
-  const deleteTask =  () => {
-
-      dispatch(deleteTaskAsync(task.id));
-
-      setIsOpenDeleteModal(false);
-  }
+  }, []);
 
   function openDeleteModal(id: number) {
     const selectedTask = tasks.find(el => el.id == id);
@@ -65,22 +57,15 @@ export const TaskList: React.FC = () => {
 
   return (
     <>
-      {error && <ErrorMessage error={error}/>}
+      {fetchError && <ErrorMessage error={fetchError}/>}
 
-      {categoriesError && <ErrorMessage error = {categoriesError} />}
+      {categoriesFetchError && <ErrorMessage error = {categoriesFetchError} />}
       
       {loading && <Loader />}
 
-      {!loading && !error && <div className="list">{taskList}</div>}
+      {!loading && !fetchError && <div className="list">{taskList}</div>}
 
-      <ConfirmModal isOpened={isOpenDeleteModal}
-        title="Удаление задачи"
-        submitText="Да"
-        cancelText="Нет"
-        onSubmit={() => deleteTask()}
-        onClose={() => setIsOpenDeleteModal(false)}>
-        <span>Вы уверены, что хотите удалить задачу "{task.name}"?</span>
-      </ConfirmModal>
+      {isOpenDeleteModal && <DeleteTask task={task} onDone={() => setIsOpenDeleteModal(false)}/>}
 
       {isOpenEditModal && <EditTask task={task} onDone={() => setIsOpenEditModal(false)} />}
     </>

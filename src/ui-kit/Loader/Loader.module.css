@@ -1,40 +1,58 @@
-.loading{
-    position: relative;
-    height: 20px;
-    top: 50%;
-    left: 50%;
+.container {
+  position: relative;
+  left: calc(50% - 5px);
+  top: 10px;
+  color: #3F72AF;
+}
+
+.loading {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  box-shadow: 9984px 0 0 0 #3F72AF, 9999px 0 0 0 #3F72AF, 10014px 0 0 0 #3F72AF;
+  animation: dot-typing 1.5s infinite linear;
+}
+
+.buttonLoading {
+  color:white;
+}
+
+
+@keyframes dot-typing {
+  0% {
+    box-shadow: 9984px 0 0 0 , 9999px 0 0 0 , 10014px 0 0 0 ;
+    color: inherit;
   }
-  
-  @keyframes loading {
-    from {
-      bottom: 100%
-    }
-  
-    33%{
-      bottom: 0%;
-    }
-  
-    to {
-      bottom: 0%;
-    }
+
+  16.667% {
+    box-shadow: 9984px -10px 0 0 , 9999px 0 0 0 , 10014px 0 0 0 ;
+    color: inherit;
   }
-  
-  .loading > *{
-    position: absolute;
-    font-size: 60px;
-    color: #3F72AF;
-    animation-name: loading;
-    animation-iteration-count: infinite;
-    animation-duration: 1.5s;
-    text-shadow: 0px 5px 2px rgba(63, 114, 175, 0.5);
+
+  33.333% {
+    box-shadow: 9984px 0 0 0 , 9999px 0 0 0 , 10014px 0 0 0 ;
+    color: inherit;
   }
-  
-  .loading > *:nth-child(2){
-    left: 9px;
-    animation-delay: 0.5s;
+
+  50% {
+    box-shadow: 9984px 0 0 0 , 9999px -10px 0 0 , 10014px 0 0 0 ;
+    color: inherit;
   }
-  
-  .loading > *:nth-child(3){
-    left: 18px;
-    animation-delay: 1s;
+
+  66.667% {
+    box-shadow: 9984px 0 0 0 , 9999px 0 0 0 , 10014px 0 0 0 ;
+    color: inherit;
   }
+
+  83.333% {
+    box-shadow: 9984px 0 0 0 , 9999px 0 0 0 , 10014px -10px 0 0 ;
+    color: inherit;
+  }
+
+  100% {
+    box-shadow: 9984px 0 0 0 , 9999px 0 0 0 , 10014px 0 0 0 ;
+    color: inherit;
+  }
+}

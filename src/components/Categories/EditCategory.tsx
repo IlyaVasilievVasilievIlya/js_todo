@@ -9,6 +9,9 @@ import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { ModalActions } from '../../ui-kit/Modal/ModalActions/ModalActions';
 import { Button } from '../../ui-kit/Button/Button';
+import { useState } from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { Loader } from '../../ui-kit/Loader/Loader';
 
 
 interface EditCategoryProps {
@@ -22,14 +25,23 @@ export const EditCategory: React.FC<EditCategoryProps> = ({ category, onDone }: 
         defaultValues: category
     });
 
+    const [error, setError] = useState<string | undefined>(undefined);
+
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useAppDispatch();
 
     const editCategory = (editedCategory: Category) => {
-        dispatch(editCategoryAsync(editedCategory));
-        closeForm();
+        setLoading(true);
+        dispatch(editCategoryAsync(editedCategory))
+        .then(unwrapResult)
+        .then(_ => closeForm(), 
+        rejected => { setLoading(false); setError(rejected);});
     }
 
     const closeForm = () => {
+        setLoading(false);
+        setError(undefined);
         reset();
         onDone();
     }
@@ -65,8 +77,8 @@ export const EditCategory: React.FC<EditCategoryProps> = ({ category, onDone }: 
                             }
                         })} />
                 </div>
-                <ModalActions>
-                    <Button type="submit" className="primaryBtn" onClick={handleSubmit(editCategory)}>Сохранить</Button>
+                <ModalActions errorMessage={error}>
+                    <Button type="submit" className="primaryBtn" onClick={handleSubmit(editCategory)}>{loading? <Loader className='buttonLoading'/> : `Сохранить`}</Button>
                     <Button type="button" className="secondaryBtn" onClick={closeForm}>Закрыть</Button>
                 </ModalActions>
             </ModalContainer>

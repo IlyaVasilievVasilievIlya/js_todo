@@ -115,7 +115,8 @@
 /*--------------*/
 
 .errorMsg {
-  font-size: 36px;
+  font-size: inherit;
+  padding: 5px;
   color: red;
 }
 
@@ -128,4 +129,8 @@
   background-color: #DBE2EF;
   color: #3F72AF;
   z-index: 1;
+}
+
+.modal__delete-message {
+  color: black;
 }
