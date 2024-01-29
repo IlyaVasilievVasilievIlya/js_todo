@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHook';
 import { editTaskAsync } from '../../store/Tasks/tasksActions';
@@ -22,17 +22,13 @@ interface EditTaskProps {
 
 export const EditTask: React.FC<EditTaskProps> = ({ task, onDone }: EditTaskProps) => {
 
-    const { register, handleSubmit, setValue, formState: { errors }, reset, control } = useForm<Task>(
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Task>(
         { defaultValues: task }
     );
 
     const { categories } = useAppSelector(state => state.categories);
 
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        setValue('categoryId', task.categoryId);
-    }, []);
 
     const [error, setError] = useState<string | undefined>(undefined);
 

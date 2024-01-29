@@ -11,11 +11,11 @@ import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
-import { Category } from '../model';
+import { AddCategoryRequest, Category } from '../model';
 
 export const CreateCategory: React.FC = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<Category>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<AddCategoryRequest>();
 
     const [modal, setModal] = useState(false);
 
@@ -26,7 +26,7 @@ export const CreateCategory: React.FC = () => {
     const dispatch = useAppDispatch();
 
 
-    const createCategory = (newCategory: Category) => {
+    const createCategory = (newCategory: AddCategoryRequest) => {
         setLoading(true);
         dispatch(addCategoryAsync(newCategory))
         .then(unwrapResult)

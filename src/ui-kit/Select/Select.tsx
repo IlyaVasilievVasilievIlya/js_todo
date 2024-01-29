@@ -20,6 +20,10 @@ export const Select: React.FC<SelectProps> =  ({value, onChange, label, required
       
         window.addEventListener('click', handleClick);
 
+        return () => {
+            window.removeEventListener('click', handleClick);
+        }
+
       }, [isOpen]);
 
       
@@ -32,17 +36,13 @@ export const Select: React.FC<SelectProps> =  ({value, onChange, label, required
         onChange(value);
     }
 
-    const getOption = (value: number) => {
-        return options.find(option => option.value == value);
-    }
-
     return (
         <div className={styles.container} ref={rootRef}> 
             <label className={`${styles.label} ${required ? styles.required : ''}`}>
                 {label}{required && <span>*</span>}
             </label>
             <div className={`${styles.control} ${errorMessage ? styles.errorField: ''}`} onClick = {toggle}>       
-                <span className={`${styles[selectedOption ? '' :'placeholder']}`}>{getOption(selectedOption)?.label ?? placeholder}</span>
+                <span className={`${styles[selectedOption ? '' :'placeholder']}`}>{options.find(option => option.value == value)?.label ?? placeholder}</span>
                 {clearable && selectedOption != 0 && <Button className="closeBtnSmall" onClick={(e) => {e.stopPropagation(); onOptionClicked(0)}} type="button"/>}
                 <Button className={`dropDownArrow${isOpen? '-opened': ''}`} />
             </div>

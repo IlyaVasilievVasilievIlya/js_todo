@@ -5,6 +5,8 @@ export interface Task {
     categoryId: number;
 }
 
+export type AddTaskRequest = Omit<Task, "id">
+
 export interface TaskView {
     id: number;
     name: string;
@@ -17,6 +19,8 @@ export interface Category {
     name: string;
     description: string;
 }
+
+export type AddCategoryRequest = Omit<Category, "id">
 
 export interface IOption {
     value: number;

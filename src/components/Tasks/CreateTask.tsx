@@ -9,7 +9,7 @@ import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
-import { IOption, Task } from '../model';
+import { AddTaskRequest, IOption, Task } from '../model';
 import { Select } from '../../ui-kit/Select/Select';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Loader } from '../../ui-kit/Loader/Loader';
@@ -17,7 +17,7 @@ import { Loader } from '../../ui-kit/Loader/Loader';
 
 export const CreateTask: React.FC = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Task>();
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<AddTaskRequest>();
     const { categories } = useAppSelector(state => state.categories);
 
     const [modal, setModal] = useState(false);
@@ -30,7 +30,7 @@ export const CreateTask: React.FC = () => {
 
     let categoryList = categories.map((category): IOption => ({ value: category.id, label: category.name }));
 
-    const createTask = (newTask: Task) => {
+    const createTask = (newTask: AddTaskRequest) => {
         newTask.categoryId ??= 0;
         setLoading(true);
         dispatch(addTaskAsync(newTask))

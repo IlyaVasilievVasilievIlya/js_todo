@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Category } from '../../components/model';
+import { AddCategoryRequest, Category } from '../../components/model';
 import { API_URL } from '../../public/consts';
 
 export const fetchCategoriesAsync = createAsyncThunk<Category[], undefined, { rejectValue: string }>(
@@ -22,7 +22,7 @@ export const fetchCategoriesAsync = createAsyncThunk<Category[], undefined, { re
     }
 );
 
-export const addCategoryAsync = createAsyncThunk<Category, Category, { rejectValue: string }>(
+export const addCategoryAsync = createAsyncThunk<Category, AddCategoryRequest, { rejectValue: string }>(
     'categories/addCategoryAsync',
     async function (newCategory, { rejectWithValue }) {
         try {

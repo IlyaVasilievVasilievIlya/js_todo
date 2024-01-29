@@ -11,6 +11,7 @@ import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Category } from '../model';
 import '../styles.css';
+import { ConfirmModal } from '../../ui-kit/Modal/ConfirmModal/ConfirmModal';
 
 interface DeleteCategoryProps {
     category: Category
@@ -40,15 +41,15 @@ export const DeleteCategory: React.FC<DeleteCategoryProps> = ({ category, onDone
     }
 
     return (
-        <OverlayingModal isOpened={true} onClose={closeDeleteForm}>
-            <ModalContainer>
-                <ModalHeader title="Удаление категории" onClose={closeDeleteForm} />
-                <span className="modal__delete-message">Вы уверены, что хотите удалить категорию "{category.name}"?</span>
-                <ModalActions errorMessage={error}>
-                    <Button type="submit" className="primaryBtn" onClick={deleteCategory}>{loading ? <Loader className='buttonLoading' /> : `Да`}</Button>
-                    <Button type="button" className="secondaryBtn" onClick={closeDeleteForm}>Нет</Button>
-                </ModalActions>
-            </ModalContainer>
-        </OverlayingModal>
+        <ConfirmModal 
+            isOpened={true} 
+            onClose={closeDeleteForm} 
+            title="Удаление категории" 
+            onSubmit={deleteCategory} 
+            error={error} 
+            submitText={loading ? <Loader className='buttonLoading' /> : `Да`}
+            cancelText='Нет'>
+            <span className="modal__delete-message">Вы уверены, что хотите удалить категорию "{category.name}"?</span>
+        </ConfirmModal>
     );
 }

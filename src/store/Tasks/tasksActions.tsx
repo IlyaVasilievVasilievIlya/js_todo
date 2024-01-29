@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Task } from '../../components/model';
+import { AddTaskRequest, Task } from '../../components/model';
 import { API_URL } from '../../public/consts';
 
 export const fetchTasksAsync = createAsyncThunk<Task[], undefined, { rejectValue: string}>(
@@ -21,7 +21,7 @@ export const fetchTasksAsync = createAsyncThunk<Task[], undefined, { rejectValue
     }
 );
 
-export const addTaskAsync = createAsyncThunk<Task, Task, { rejectValue: string }> (
+export const addTaskAsync = createAsyncThunk<Task, AddTaskRequest, { rejectValue: string }> (
     'tasks/addTaskAsync',
     async function (newTask, { rejectWithValue }) {
         try {
