@@ -23,10 +23,10 @@ export const CategoryList: React.FC = () => {
   
   useEffect(() => {
     dispatch(fetchCategoriesAsync());
-  }, []);
+  }, [dispatch]);
 
   function openDeleteModal(id: number) {
-    let selectedCategory = categories.find(el => el.id == id);
+    let selectedCategory = categories.find(el => el.id === id);
 
     if (selectedCategory) {
       setCategory(selectedCategory);
@@ -35,7 +35,7 @@ export const CategoryList: React.FC = () => {
   }
 
   function openEditModal(id: number) {
-    let selectedCategory = categories.find(category => category.id == id);
+    let selectedCategory = categories.find(category => category.id === id);
 
     if (selectedCategory) {
       setCategory(selectedCategory);

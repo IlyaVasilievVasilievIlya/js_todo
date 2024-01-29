@@ -1,4 +1,4 @@
-import {UnknownAction, configureStore} from '@reduxjs/toolkit';
+import { configureStore} from '@reduxjs/toolkit';
 import tasksReducer from './Tasks/tasksSlice';
 import categoriesReducer from './Categories/categoriesSlice';
 

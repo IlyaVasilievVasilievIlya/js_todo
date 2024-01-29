@@ -11,7 +11,7 @@ import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
-import { AddCategoryRequest, Category } from '../model';
+import { AddCategoryRequest } from '../model';
 
 export const CreateCategory: React.FC = () => {
 

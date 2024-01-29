@@ -9,7 +9,7 @@ import { ModalContainer } from '../../ui-kit/Modal/ModalContainer/ModalContainer
 import { ModalHeader } from '../../ui-kit/Modal/ModalHeader/ModalHeader';
 import { OverlayingModal } from '../../ui-kit/Modal/OverlayingModal/OverlayingModal';
 import { Textarea } from '../../ui-kit/Textarea/Textarea';
-import { AddTaskRequest, IOption, Task } from '../model';
+import { AddTaskRequest, IOption } from '../model';
 import { Select } from '../../ui-kit/Select/Select';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Loader } from '../../ui-kit/Loader/Loader';
