@@ -1,0 +1,48 @@
+.input {
+    padding: 5px 5px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 40px;
+    background-color: inherit;
+    border: 2px solid #3F72AF;
+    border-radius: 3px;
+    font-size: 18px;
+    font-family: inherit;
+    position: relative;
+}
+
+.input:hover {
+    border-color: #257FEA;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #257FEA;
+}
+
+.label {
+    position: absolute;
+    top: -12px;
+    left: 10px;
+    background-color: #DBE2EF;
+    color: #3F72AF;
+    z-index: 1;
+}
+
+.required span {
+    color: red;
+}
+
+.errorField {
+    border: 2px solid red !important;
+}
+
+.errorField:focus {
+    outline-color: red !important;
+}
+
+.errorMessage{
+    line-height: 20px;
+    font-size: 14px;
+    color: red;
+}

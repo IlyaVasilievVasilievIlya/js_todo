@@ -1,0 +1,101 @@
+button {
+    cursor: pointer;
+}
+
+
+.primaryBtn,
+.secondaryBtn {
+    padding: 5px;
+    height: 40px;
+    font-family: 'Segoe UI' sans-serif;
+    font-size: 18px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.primaryBtn {
+    width: 40%;
+    background-color: #3F72AF;
+    color: white;
+    border: 0;
+}
+
+.primaryBtn:focus,
+.primaryBtn:hover {
+    background-color: #257FEA;
+    outline-color: #257FEA;
+}
+
+.primaryBtn:active {
+    background-color: #65ABFF;
+}
+
+.secondaryBtn {
+    width: 120px;
+    background-color: transparent;
+    color: #3F72AF;
+    border: 2px solid #3F72AF;
+}
+
+.secondaryBtn:focus,
+.secondaryBtn:hover {
+    background-color: rgba(37, 127, 234, 0.2);
+    color: white;
+    outline-color: #257FEA;
+}
+
+.secondaryBtn:active {
+    background-color: #257FEA;
+}
+
+.actionBtn {
+    background-color: inherit;
+    font-size: 20px;
+    border: inherit;
+    color: inherit;
+}
+
+.closeBtn,
+.editBtn,
+.deleteBtn {
+    width: 24px;
+    height: 24px;
+    border: inherit;
+    background-color: inherit;
+    margin: 5px;
+}
+
+.closeBtn {
+    background-image: url("../../public/close.svg");
+}
+
+.editBtn {
+    background-image: url("../../public/edit.svg");
+}
+
+.deleteBtn {
+    background-image: url("../../public/delete.svg");
+}
+
+.dropDownArrow, .dropDownArrow-opened {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: inherit;
+    background-image: url("../../public/dropDownArrow.svg");
+}
+
+.dropDownArrow-opened {
+    background-image: url("../../public/dropDownArrow.svg");
+    transform: rotate(0.5turn);
+}
+
+.closeBtnSmall {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: inherit;
+    color: red;
+    margin: 5px;
+    background-image: url("../../public/closeSelection.svg");
+}
